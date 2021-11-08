@@ -1,7 +1,7 @@
 <template>
   <div class="input">
     <label :for="id">{{ label }}</label>
-    <input :type="inputtype" :id="id" :placeholder="placeholder" />
+    <input :type="inputtype" :id="id" :placeholder="placeholder" autocomplete="off"/>
     <span
       @click="togglePassword"
       class="toggle-password"

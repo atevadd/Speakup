@@ -1,5 +1,5 @@
 <template>
-  <div class="signup">
+  <div class="login">
     <div class="brand-logo">
       <h2>
         Sign in to
@@ -9,7 +9,7 @@
       </h2>
     </div>
 
-    <form class="signup-form">
+    <form class="login-form">
       <Input id="email" inputtype="email" label="Email" />
       <Input id="password" inputtype="password" label="password" />
       <Button type="submit" buttonText="Sign in" />
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.signup {
+.login {
   position: relative;
   width: 30%;
   margin: 5% auto;
