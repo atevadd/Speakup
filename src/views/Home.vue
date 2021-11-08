@@ -8,7 +8,7 @@
         <router-link :to="{ name: 'login' }" class="login-cta"
           >login</router-link
         >
-        <router-link :to="{ name: 'About' }" class="signup-cta"
+        <router-link :to="{ name: 'signup' }" class="signup-cta"
           >Signup</router-link
         >
       </nav>
@@ -24,7 +24,7 @@
         reiciendis minima dignissimos quisquam expedita tempora dolorem
         voluptatum hic doloribus harum?
       </p> -->
-      <router-link class="hero-cta" :to="{ name: 'About' }"
+      <router-link class="hero-cta" :to="{ name: 'signup' }"
         >Get Started</router-link
       >
     </section>

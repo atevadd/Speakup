@@ -39,9 +39,9 @@ export default {
 
   label {
     display: block;
-    font-size: 0.85rem;
+    font-size: 0.83rem;
     color: #5a5a5a;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
     text-transform: capitalize;
   }
 
@@ -61,7 +61,7 @@ export default {
   }
   .toggle-password {
     position: absolute;
-    top: 53%;
+    top: 50%;
     //   transform: translateY(%);
     right: 10px;
     font-size: 1.2rem;

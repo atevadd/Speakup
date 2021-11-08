@@ -11,17 +11,26 @@
       <Input id="fname" label="first name" inputtype="text" />
       <Input id="lname" label="last name" inputtype="text" />
       <Input id="email" label="email" inputtype="email" />
+      <Input id="tel" label="Phone number" inputtype="tel" />
+      <Input id="pass" label="password" inputtype="password" />
+      <Button buttonText="Sign up" type="submit" />
     </form>
+
+    <div class="login-container">
+      <p>Already a user? <router-link :to="{name: 'login'}">Login</router-link></p>
+    </div>
   </div>
 </template>
 
 <script>
 import Input from "@/components/Input.vue";
+import Button from "@/components/Button.vue";
 
 export default {
   name: "Signup",
   components: {
     Input,
+    Button,
   },
 };
 </script>
@@ -31,6 +40,13 @@ export default {
   width: 30%;
   margin: 5% auto;
   position: relative;
+
+  @include mobile{
+    width: 90%;
+  }
+  @include tablet{
+    width: 60%;
+  }
 
   .header {
     display: block;
@@ -58,6 +74,27 @@ export default {
     border: 1px solid #aaa;
     padding: 25px;
     border-radius: 5px;
+  }
+
+  .login-container{
+    width: 100%;
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    margin-top: 20px;
+
+    p {
+      font-size: 0.8rem;
+    }
+
+    a {
+      color: #f52653;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }
 </style>
