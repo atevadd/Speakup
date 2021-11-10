@@ -56,7 +56,7 @@ export default {
     outline: none;
 
     &:focus {
-      border: 1px solid #f52653;
+      border: 1px solid $brand-color;
     }
   }
   .toggle-password {

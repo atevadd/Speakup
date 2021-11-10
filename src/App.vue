@@ -22,6 +22,11 @@ a{
   text-decoration: none;
 }
 
+::selection{
+  color: $white;
+  background-color: $brand-color;
+}
+
 body{
   overflow-x: hidden;
 }

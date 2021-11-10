@@ -11,21 +11,31 @@
     <nav class="nav">
       <ul>
         <li><router-link :to="{ name: 'dashboard' }">Home</router-link></li>
-        <li><router-link :to="{ name: 'home' }">Feeds</router-link></li>
+        <!-- <li><router-link :to="{ name: 'home' }">Feeds</router-link></li> -->
         <li><router-link :to="{ name: 'home' }">Profile</router-link></li>
       </ul>
     </nav>
 
     <div class="user-pill">
-      <img src="@/assets/logo.png" alt="" />
-      <i class="bx bx-caret-down"></i>
+      <Button buttonText="Add post" @click="showModal"></Button>
+      <!-- <img src="@/assets/logo.png" alt="" />
+      <i class="bx bx-caret-down"></i> -->
     </div>
   </header>
 </template>
 
 <script>
+import Button from "@/components/Button.vue"
 export default {
   name: "Navbar",
+  components:{
+      Button,
+  },
+  methods:{
+      showModal(){
+          this.$emit('show-modal')
+      }
+  }
 };
 </script>
 
@@ -37,7 +47,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 5px solid #f52653;
+  border-top: 5px solid $brand-color;
   background: #b5b5b5;
 
   .brand-logo {
@@ -50,7 +60,7 @@ header {
         color: #333;
 
         span {
-          color: #f52653;
+          color: $brand-color;
         }
       }
     }
@@ -72,12 +82,12 @@ header {
           font-size: 0.88rem;
 
           &.router-link-active {
-              color: #333;
+            color: #333;
             font-weight: 700;
           }
 
-          &:hover{
-              border-bottom: 2px solid #f52653;
+          &:hover {
+            border-bottom: 2px solid $brand-color;
           }
         }
       }
@@ -94,6 +104,7 @@ header {
       height: 25px;
       border-radius: 50%;
       margin-right: 5px;
+      margin-left: 20px;
     }
   }
 }

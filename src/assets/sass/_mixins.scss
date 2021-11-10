@@ -10,7 +10,14 @@
 
 // tablet device
 @mixin tablet{
-  @media screen and (min-width: 479px) and (max-width: 1023px) {
+  @media screen and (min-width: 479px) and (max-width: 768px) {
+    @content;
+  }
+}
+
+//small laptop
+@mixin laptop{
+  @media screen and (min-width: 769px) and (max-width: 1024px) {
     @content;
   }
 }

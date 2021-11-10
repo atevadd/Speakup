@@ -2,7 +2,7 @@
   <main class="landing">
     <header>
       <div class="brand-logo">
-        <router-link class="logo" :to="{ name: 'Home' }">Spe<span>ak</span>up</router-link>
+        <router-link class="logo" :to="{ name: 'home' }">Spe<span>ak</span>up</router-link>
       </div>
       <nav>
         <router-link :to="{ name: 'login' }" class="login-cta"
@@ -63,7 +63,7 @@ export default {
         color: #fff;
 
         span{
-          color: #f52653;
+          color: $brand-color;
         }
       }
     }
@@ -83,13 +83,13 @@ export default {
         }
 
         &.signup-cta {
-          border: 2px solid #f52653;
+          border: 2px solid $brand-color;
           color: #fff;
           border-radius: 5px;
           transition: 0.2s ease;
 
           &:hover {
-            background: #f52653;
+            background: $brand-color;
           }
         }
         &.login-cta {
@@ -126,7 +126,7 @@ export default {
       }
 
       span {
-        color: #f52653;
+        color: $brand-color;
       }
     }
     &-subtext {
@@ -144,7 +144,7 @@ export default {
       display: inline-block;
       padding: 15px 30px;
       border-radius: 5px;
-      background: #f52653;
+      background: $brand-color;
       color: $white;
       margin-top: 25px;
       text-decoration: none;
@@ -156,7 +156,7 @@ export default {
       }
 
       &:hover {
-        background: darken($color: #f52653, $amount: 10%);
+        background: darken($color: $brand-color, $amount: 10%);
       }
     }
   }

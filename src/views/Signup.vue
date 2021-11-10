@@ -2,7 +2,7 @@
   <div class="signup">
     <h2 class="header">
       Signup to
-      <router-link class="logo" :to="{ name: 'Home' }"
+      <router-link class="logo" :to="{ name: 'home' }"
         >Spe<span>ak</span>up</router-link
       >
     </h2>
@@ -13,7 +13,7 @@
       <Input id="email" label="email" inputtype="email" />
       <Input id="tel" label="Phone number" inputtype="tel" />
       <Input id="pass" label="password" inputtype="password" />
-      <Button buttonText="Sign up" type="submit" />
+      <Button buttonText="Sign up" type="submit" width="100%"/>
     </form>
 
     <div class="login-container">

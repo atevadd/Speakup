@@ -3,7 +3,7 @@
     <div class="brand-logo">
       <h2>
         Sign in to
-        <router-link class="logo" :to="{ name: 'Home' }"
+        <router-link class="logo" :to="{ name: 'home' }"
           >Spe<span>ak</span>up</router-link
         >
       </h2>
@@ -12,7 +12,7 @@
     <form class="login-form">
       <Input id="email" inputtype="email" label="Email" />
       <Input id="password" inputtype="password" label="password" />
-      <Button type="submit" buttonText="Sign in" />
+      <Button type="submit" buttonText="Sign in" width="100%"/>
     </form>
     <div class="new-account">
       <p>

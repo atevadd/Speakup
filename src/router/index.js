@@ -29,6 +29,12 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: () => import( /* webpackChunkName: "dashboard" */ '../views/Dashboard.vue')
+  },
+  {
+    path: '/post/:id',
+    name: 'post',
+    component: () => import( /* webpackChunkName: "dashboard" */ '../views/Post.vue'),
+    props: true
   }
 ]
 
