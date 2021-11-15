@@ -1,11 +1,16 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {
+  createRouter,
+  createWebHistory
+} from 'vue-router'
 import Home from '../views/Home.vue'
 
-const routes = [
-  {
+const routes = [{
     path: '/',
     name: 'home',
-    component: Home
+    component: Home,
+    meta: {
+      title: "Speak - a blog that allows you to speak your mind"
+    }
   },
   {
     path: '/about',
@@ -13,34 +18,60 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import( /* webpackChunkName: "about" */ '../views/About.vue'),
   },
   {
     path: '/login',
     name: 'login',
-    component: () => import( /* webpackChunkName: "login" */ '../views/Login.vue')
+    component: () => import( /* webpackChunkName: "login" */ '../views/Login.vue'),
+    meta: {
+      title: "Speakup - Login to begin"
+    }
   },
   {
     path: '/signup',
     name: 'signup',
-    component: () => import( /* webpackChunkName: "signup" */ '../views/Signup.vue')
+    component: () => import( /* webpackChunkName: "signup" */ '../views/Signup.vue'),
+    meta: {
+      title: "Speakup - create an account to start writing"
+    }
   },
   {
     path: '/dashboard',
     name: 'dashboard',
-    component: () => import( /* webpackChunkName: "dashboard" */ '../views/Dashboard.vue')
+    component: () => import( /* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
+    meta: {
+      title: "Speakup - Dashboard - welcome to your dashboard"
+    }
   },
   {
     path: '/post/:id',
     name: 'post',
-    component: () => import( /* webpackChunkName: "dashboard" */ '../views/Post.vue'),
-    props: true
+    component: () => import( /* webpackChunkName: "post" */ '../views/Post.vue'),
+    props: true,
+    meta: {
+      title: "Speakup - Post - This is the first content"
+    }
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: () => import( /* webpackChunkName: "profile" */ '../views/Profile.vue'),
+    meta: {
+      title: "Speakup - Profile"
+    }
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+// changing the page title dynamically
+router.beforeEach((to, from, next) =>{
+  document.title = `${to.meta.title}`
+  next()
 })
 
 export default router

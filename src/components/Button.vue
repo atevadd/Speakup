@@ -29,7 +29,7 @@ export default {
 <style lang="scss" scoped>
 button {
   display: inline-block;
-  padding: 12px 30px;
+  padding: 15px 30px;
   background: $brand-color;
   border: none;
   outline: none;
@@ -37,11 +37,10 @@ button {
   color: $white;
   transition: 0.2s ease;
   cursor: pointer;
+  z-index: 2;
 
   &:hover {
     background: darken($color: $brand-color, $amount: 10%);
   }
-
-  
 }
 </style>

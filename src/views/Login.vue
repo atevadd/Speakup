@@ -10,9 +10,19 @@
     </div>
 
     <form class="login-form">
-      <Input id="email" inputtype="email" label="Email" />
-      <Input id="password" inputtype="password" label="password" />
-      <Button type="submit" buttonText="Sign in" width="100%"/>
+      <Input>
+        <label for="email">Email</label>
+        <input type="email" id="email" v-model="loginData.email"/>
+      </Input>
+      <Input>
+        <label for="password">Password</label>
+        <input type="password" id="password" v-model="loginData.password"/>
+        <span @click="togglePassword" class="toggle-password"
+          ><i class="bx bxs-show"></i>
+        </span>
+      </Input>
+
+      <Button type="submit" buttonText="Sign in" width="100%" :class="[sendingRequest ? 'loading' : '']"/>
     </form>
     <div class="new-account">
       <p>
@@ -33,6 +43,28 @@ export default {
     Input,
     Button,
   },
+  data() {
+    return{
+      loginData: {
+        email: '',
+        password: '',
+      },
+      sendingRequest: false,
+    }
+  },
+  methods: {
+    togglePassword(e) {
+      let passwordField = e.target.parentElement.previousElementSibling;
+      let icon = e.target;
+      if (passwordField.type === "password") {
+        passwordField.type = "text";
+        icon.className = "bx bxs-hide";
+      } else {
+        passwordField.type = "password";
+        icon.className = "bx bxs-show";
+      }
+    },
+  },
 };
 </script>
 
@@ -40,14 +72,17 @@ export default {
 .login {
   position: relative;
   width: 30%;
-  margin: 5% auto;
+  margin: 2% auto;
 
-  @include mobile{
+  @include mobile {
     width: 90%;
     margin: 8% auto;
   }
-  @include tablet{
-    width: 50%;
+  @include tablet {
+    width: 60%;
+  }
+  @include laptop {
+    width: 40%;
   }
 
   .brand-logo {
@@ -80,6 +115,82 @@ export default {
     border: 1px solid #aaa;
     padding: 25px;
     border-radius: 5px;
+
+    label {
+      display: block;
+      font-size: 0.83rem;
+      color: #5a5a5a;
+      margin-bottom: 3px;
+      text-transform: capitalize;
+    }
+
+    input {
+      display: block;
+      position: relative;
+      height: 35px;
+      width: 100%;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+      padding: 0 10px;
+      outline: none;
+
+      &:focus {
+        border: 1px solid $brand-color;
+      }
+    }
+    .toggle-password {
+      position: absolute;
+      top: 50%;
+      //   transform: translateY(%);
+      right: 10px;
+      font-size: 1.2rem;
+      transition: 0.15s ease;
+
+      i {
+        color: #5a5a5a;
+        cursor: pointer;
+      }
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition-property: background;
+      transition-duration: 0.35s;
+      transition-timing-function: ease;
+      // background: transparent;
+      overflow: hidden;
+      z-index: 2;
+
+      &.loading {
+        position: relative;
+        z-index: 2;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 300%;
+          height: 100%;
+          background: $brand-color
+            repeating-linear-gradient(
+              60deg,
+              transparent,
+              transparent 10px,
+              lighten($color: $brand-color, $amount: 5%) 10px,
+              lighten($color: $brand-color, $amount: 5%) 20px
+            );
+          z-index: -1;
+          animation: loading 1s infinite linear;
+        }
+      }
+
+      i {
+        font-size: 1.5rem;
+      }
+    }
   }
 
   .new-account {

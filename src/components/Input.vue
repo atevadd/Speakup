@@ -1,21 +1,23 @@
 <template>
   <div class="input">
-    <label :for="id">{{ label }}</label>
-    <input :type="inputtype" :id="id" :placeholder="placeholder" autocomplete="off"/>
+    <!-- <label :for="id">{{ label }}</label>
+    <input @input="$emit('update:inputValue', $event.target.value)" :type="inputtype" :id="id" :placeholder="placeholder" :value="inputValue" :autocomplete="complete" :accept="imgtype"/>
     <span
       @click="togglePassword"
       class="toggle-password"
       v-if="inputtype == 'password'"
       ><i class="bx bxs-show"></i
-    ></span>
+    ></span> -->
+    <slot></slot>
   </div>
 </template>
 
 <script>
 export default {
   name: "Input",
-  props: ["id", "label", "inputtype", "placeholder"],
-  methods: {
+  props: ["id", "label", "inputtype", "placeholder", 'complete','imgtype', 'inputValue'],
+  emits:['update:inputValue'],
+ methods: {
     togglePassword(e) {
       let passwordField = e.target.parentElement.previousElementSibling;
       let icon = e.target;
