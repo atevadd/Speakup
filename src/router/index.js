@@ -9,7 +9,7 @@ const routes = [{
     name: 'home',
     component: Home,
     meta: {
-      title: "Speak - a blog that allows you to speak your mind"
+      title: "Speakup - a blog that allows you to speak your mind"
     }
   },
   {
