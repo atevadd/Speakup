@@ -136,7 +136,7 @@ export default {
   methods: {
     onFileSelected(e) {
       this.userData.selectedImage = e.target.files[0];
-      console.log(this.userData.selectedImage);
+      console.log(this.userData);
     },
     submitForm() {
       // addding the user selected image as a form data
@@ -184,7 +184,7 @@ export default {
           }
 
           this.sendingRequest = false;
-        })
+        }) 
         .catch((error) => {
           if (error.message.includes("400")) {
             this.formError = "Email already exist";
@@ -322,6 +322,7 @@ export default {
       &.loading {
         position: relative;
         z-index: 2;
+        cursor: not-allowed;
 
         &::before {
           content: "";

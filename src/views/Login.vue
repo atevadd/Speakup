@@ -103,6 +103,13 @@ export default {
       document.querySelector(".signup-response").remove();
     },
   },
+  mounted() {
+    if (this.msg !== null) {
+      setTimeout(() => {
+        this.removeSignupResponse();
+      }, 4000);
+    }
+  },
 };
 </script>
 
@@ -162,15 +169,16 @@ export default {
       padding: 10px;
       border-radius: 5px;
       margin-bottom: 20px;
+      font-size: 0.85rem;
 
-      @include mobile{
-        font-size: .75rem;
+      @include mobile {
+        font-size: 0.75rem;
       }
-      @include tablet{
-        font-size: .82rem;
+      @include tablet {
+        font-size: 0.82rem;
       }
-      @include laptop{
-        font-size: .88rem;
+      @include laptop {
+        font-size: 0.85rem;
       }
     }
 
