@@ -4,7 +4,10 @@
       <span @click="closeModal"><i class="bx bx-x"></i></span>
 
       <form class="add-post-form">
-        <Input id="title" label="title" inputtype="text" />
+        <Input id="title" label="title" inputtype="text" >
+          <label for="title">Title</label>
+          <input type="text" id="title">
+        </Input>
         <Textarea label="Content" id="content" />
 
         <Button width="100%" buttonText ="Add post" />
@@ -89,5 +92,28 @@ export default {
       }
     }
   }
+
+  label {
+      display: block;
+      font-size: 0.83rem;
+      color: #5a5a5a;
+      margin-bottom: 3px;
+      text-transform: capitalize;
+    }
+
+    input {
+      display: block;
+      position: relative;
+      height: 35px;
+      width: 100%;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+      padding: 0 10px;
+      outline: none;
+
+      &:focus {
+        border: 1px solid $brand-color;
+      }
+    }
 }
 </style>

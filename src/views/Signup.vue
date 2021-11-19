@@ -134,9 +134,9 @@ export default {
     };
   },
   methods: {
+    // getting the file name when the user selects an image
     onFileSelected(e) {
       this.userData.selectedImage = e.target.files[0];
-      console.log(this.userData);
     },
     submitForm() {
       // addding the user selected image as a form data
