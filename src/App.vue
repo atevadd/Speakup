@@ -1,54 +1,59 @@
 <template>
-  <router-view/>
+  <transition name="router">
+    <router-view />
+  </transition>
 </template>
 
 <script>
- 
 export default {
   name: "App",
-}
+};
 </script>
 
 <style lang="scss">
-
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
-a{
+a {
   text-decoration: none;
 }
 
-::selection{
+::selection {
   color: $white;
   background-color: $brand-color;
 }
 
-body{
+body {
   overflow-x: hidden;
 }
 
-// #app {
-//   font-family: Avenir, Helvetica, Arial, sans-serif;
-//   -webkit-font-smoothing: antialiased;
-//   -moz-osx-font-smoothing: grayscale;
-//   text-align: center;
-//   color: #2c3e50;
-// }
+.router-enter-active{
+  animation: comingIn .05s linear .1s;
+  opacity: 0;
+}
+.router-leave-active{
+  animation: leaving .1s linear;
+}
 
-// #nav {
-//   padding: 30px;
+@keyframes comingIn {
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}
 
-//   a {
-//     font-weight: bold;
-//     color: #2c3e50;
-
-//     &.router-link-exact-active {
-//       color: #42b983;
-//     }
-//   }
-// }
+@keyframes leaving {
+  from{
+    opacity: 1;
+  }
+  to{
+    opacity: 0;
+  }
+}
 </style>

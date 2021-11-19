@@ -9,20 +9,26 @@
       </h2>
     </div>
 
-    <form class="login-form">
+    <form class="login-form" @submit.prevent="submitForm">
+      <p class="signup-response" v-if="msg">{{ msg }}</p>
       <Input>
         <label for="email">Email</label>
-        <input type="email" id="email" v-model="loginData.email"/>
+        <input type="email" id="email" v-model="loginData.email" />
       </Input>
       <Input>
         <label for="password">Password</label>
-        <input type="password" id="password" v-model="loginData.password"/>
+        <input type="password" id="password" v-model="loginData.password" />
         <span @click="togglePassword" class="toggle-password"
           ><i class="bx bxs-show"></i>
         </span>
       </Input>
 
-      <Button type="submit" buttonText="Sign in" width="100%" :class="[sendingRequest ? 'loading' : '']"/>
+      <Button
+        type="submit"
+        buttonText="Sign in"
+        width="100%"
+        :class="[sendingRequest ? 'loading' : '']"
+      />
     </form>
     <div class="new-account">
       <p>
@@ -36,6 +42,7 @@
 <script>
 import Input from "@/components/Input.vue";
 import Button from "@/components/Button.vue";
+import axios from "axios";
 
 export default {
   name: "Signup",
@@ -43,14 +50,21 @@ export default {
     Input,
     Button,
   },
+  props: {
+    msg: {
+      type: String,
+      required: false,
+    },
+  },
   data() {
-    return{
+    return {
       loginData: {
-        email: '',
-        password: '',
+        email: "",
+        password: "",
       },
       sendingRequest: false,
-    }
+      token: "",
+    };
   },
   methods: {
     togglePassword(e) {
@@ -63,6 +77,30 @@ export default {
         passwordField.type = "password";
         icon.className = "bx bxs-show";
       }
+    },
+    submitForm() {
+      this.sendingRequest = true;
+
+      const config = {
+        method: "post",
+        url: "https://myteamworkproject.herokuapp.com/v1/auth/signin",
+        header: {
+          "Content-Type": "application/json",
+        },
+        data: this.loginData,
+      };
+
+      axios(config)
+        .then((response) => {
+          console.log(response.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          this.sendingRequest = false;
+        });
+    },
+    removeSignupResponse() {
+      document.querySelector(".signup-response").remove();
     },
   },
 };
@@ -116,6 +154,26 @@ export default {
     padding: 25px;
     border-radius: 5px;
 
+    .signup-response {
+      display: block;
+      text-align: center;
+      background-color: rgb(25, 217, 83);
+      color: $white;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+
+      @include mobile{
+        font-size: .75rem;
+      }
+      @include tablet{
+        font-size: .82rem;
+      }
+      @include laptop{
+        font-size: .88rem;
+      }
+    }
+
     label {
       display: block;
       font-size: 0.83rem;
@@ -166,6 +224,7 @@ export default {
       &.loading {
         position: relative;
         z-index: 2;
+        cursor: not-allowed;
 
         &::before {
           content: "";
@@ -212,6 +271,15 @@ export default {
         text-decoration: underline;
       }
     }
+  }
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-25px);
+  }
+  100% {
+    transform: translateX(20px);
   }
 }
 </style>

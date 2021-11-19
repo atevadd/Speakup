@@ -26,7 +26,8 @@ const routes = [{
     component: () => import( /* webpackChunkName: "login" */ '../views/Login.vue'),
     meta: {
       title: "Speakup - Login to begin"
-    }
+    },
+    props: true,
   },
   {
     path: '/signup',

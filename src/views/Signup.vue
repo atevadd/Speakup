@@ -11,35 +11,71 @@
       <div class="error" v-show="formError">{{ formError }}</div>
       <Input>
         <label for="img">Profile picture</label>
-        <input type="file" id="img" accept=".png, .jpg, .jpeg, .svg" autocomplete="off" @change="onFileSelected"/>
+        <input
+          type="file"
+          id="img"
+          accept=".png, .jpg, .jpeg, .svg"
+          autocomplete="off"
+          @change="onFileSelected"
+        />
       </Input>
       <Input>
         <label for="fname">First name</label>
-        <input type="text" v-model="userData.fname" id="fname" autocomplete="off"/>
+        <input
+          type="text"
+          v-model="userData.fname"
+          id="fname"
+          autocomplete="off"
+        />
       </Input>
       <Input>
         <label for="lname">last name</label>
-        <input type="text" v-model="userData.lname" id="lname" autocomplete="off"/>
+        <input
+          type="text"
+          v-model="userData.lname"
+          id="lname"
+          autocomplete="off"
+        />
       </Input>
       <Input>
         <label for="email">Email</label>
-        <input type="email" v-model="userData.email" id="email" autocomplete="off"/>
+        <input
+          type="email"
+          v-model="userData.email"
+          id="email"
+          autocomplete="off"
+        />
       </Input>
       <Input>
         <label for="gen">Gender</label>
-        <input type="text" v-model="userData.gender"  id="gen" autocomplete="off"/>
+        <input
+          type="text"
+          v-model="userData.gender"
+          id="gen"
+          autocomplete="off"
+        />
       </Input>
       <Input>
         <label for="job">Job role</label>
-        <input type="text" v-model="userData.job" id="job" autocomplete="off"/>
+        <input type="text" v-model="userData.job" id="job" autocomplete="off" />
       </Input>
       <Input>
         <label for="dept">Dept</label>
-        <input type="text" v-model="userData.dept"  id="dept" autocomplete="off"/>
+        <input
+          type="text"
+          v-model="userData.dept"
+          id="dept"
+          autocomplete="off"
+        />
       </Input>
       <Input>
         <label for="addr">Address</label>
-        <input type="text" v-model="userData.address" id="addr" autocomplete="off"/>
+        <input
+          type="text"
+          v-model="userData.address"
+          id="addr"
+          autocomplete="off"
+        />
       </Input>
       <Input>
         <label for="passsword">Password</label>
@@ -72,7 +108,7 @@
 <script>
 import Input from "@/components/Input.vue";
 import Button from "@/components/Button.vue";
-import axios from"axios";
+import axios from "axios";
 
 export default {
   name: "Signup",
@@ -98,58 +134,66 @@ export default {
     };
   },
   methods: {
-    onFileSelected(e){
-      this.userData.selectedImage = e.target.files[0]
-      console.log(this.userData.selectedImage)
+    onFileSelected(e) {
+      this.userData.selectedImage = e.target.files[0];
+      console.log(this.userData.selectedImage);
     },
     submitForm() {
       // addding the user selected image as a form data
-      const formData = new FormData()
-      formData.append('image', this.userData.selectedImage, this.userData.selectedImage.name)
+      const formData = new FormData();
+      formData.append(
+        "image",
+        this.userData.selectedImage,
+        this.userData.selectedImage.name
+      );
 
       // adding the user data to the form data object
-      formData.append('firstName', this.userData.fname)
-      formData.append('lastName', this.userData.lname)
-      formData.append('email', this.userData.email)
-      formData.append('gender', this.userData.gender)
-      formData.append('jobRole', this.userData.job)
-      formData.append('dept', this.userData.dept)
-      formData.append('address', this.userData.address)
-      formData.append('password', this.userData.password)
+      formData.append("firstName", this.userData.fname);
+      formData.append("lastName", this.userData.lname);
+      formData.append("email", this.userData.email);
+      formData.append("gender", this.userData.gender);
+      formData.append("jobRole", this.userData.job);
+      formData.append("dept", this.userData.dept);
+      formData.append("address", this.userData.address);
+      formData.append("password", this.userData.password);
 
       // API POST request configuration
       let config = {
-        method: 'post',
-        url: 'https://myteamworkproject.herokuapp.com/v1/auth/users',
-        headers:{
-          'Content-Type': 'application/json'
+        method: "post",
+        url: "https://myteamworkproject.herokuapp.com/v1/auth/users",
+        headers: {
+          "Content-Type": "application/json",
         },
-        data: formData
-      }
+        data: formData,
+      };
 
       this.sendingRequest = true;
 
       axios(config)
-      .then(response => {
-        let responseData = response.data
-        console.log(responseData)
+        .then((response) => {
+          let responseData = response.data;
+          console.log(responseData);
 
-        if(responseData.status === 'success'){
-          this.$router.push({name: 'login'})
-        }
+          if (responseData.status === "success") {
+            this.$router.push({
+              name: "login",
+              params: {
+                msg: "Your account has been created successfully",
+              },
+            });
+          }
 
-        this.sendingRequest = false
-      })
-      .catch(error => {
-
-        if(error.message.includes('400')){
-          this.formError = "Email already exist"
-        }else{
-          this.formError = error.message
-        }
-        console.log(error)
-        this.sendingRequest = false
-      })
+          this.sendingRequest = false;
+        })
+        .catch((error) => {
+          if (error.message.includes("400")) {
+            this.formError = "Email already exist";
+          } else {
+            this.formError = error.message;
+          }
+          console.log(error);
+          this.sendingRequest = false;
+        });
     },
     togglePassword(e) {
       let passwordField = e.target.parentElement.previousElementSibling;
@@ -278,7 +322,6 @@ export default {
       &.loading {
         position: relative;
         z-index: 2;
-
 
         &::before {
           content: "";
