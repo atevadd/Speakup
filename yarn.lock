@@ -2906,6 +2906,11 @@ crypto-browserify@^3.11.0:
     randombytes "^2.0.0"
     randomfill "^1.0.3"
 
+crypto-js@^4.0.0, crypto-js@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.1.1.tgz#9e485bcf03521041bd85844786b83fb7619736cf"
+  integrity sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==
+
 css-color-names@0.0.4, css-color-names@^0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
@@ -8325,6 +8330,13 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
+
+vue-cryptojs@^2.1.6:
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/vue-cryptojs/-/vue-cryptojs-2.1.6.tgz#5ad2f8455059046caabcca7c3f4f8f11f887026d"
+  integrity sha512-zxcIEZbfF604bfXoLFmfE/q3K0K/M74t7egUwlbus6B3rhd32yTt5CyhSstURXzIk2QKTWuzL2h0QjJJuxyaUQ==
+  dependencies:
+    crypto-js "^4.0.0"
 
 vue-eslint-parser@^7.10.0:
   version "7.11.0"

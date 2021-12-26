@@ -2,15 +2,17 @@
   <main class="landing">
     <header>
       <div class="brand-logo">
-        <router-link class="logo" :to="{ name: 'home' }">Spe<span>ak</span>up</router-link>
+        <router-link class="logo" :to="{ name: 'home' }"
+          >Spe<span>ak</span>up</router-link
+        >
       </div>
       <nav>
         <router-link :to="{ name: 'login' }" class="login-cta"
           >login</router-link
         >
-        <router-link :to="{ name: 'signup' }" class="signup-cta"
+        <!-- <router-link :to="{ name: 'signup' }" class="signup-cta"
           >Signup</router-link
-        >
+        > -->
       </nav>
     </header>
 
@@ -25,8 +27,8 @@
         voluptatum hic doloribus harum?
       </p> -->
       <router-link class="hero-cta" :to="{ name: 'signup' }"
-        >Get Started</router-link
-      >
+        >Get Started <i class="bx bx-right-arrow-alt"></i
+      ></router-link>
     </section>
   </main>
 </template>
@@ -62,7 +64,7 @@ export default {
         font-weight: 600;
         color: #fff;
 
-        span{
+        span {
           color: $brand-color;
         }
       }
@@ -93,11 +95,17 @@ export default {
           }
         }
         &.login-cta {
-          color: #ff0037;
+          // color: #ffff0037;
+          color: #fff;
+          font-weight: 700;
 
           @include mobile {
             display: none;
-      }
+          }
+
+          &:hover {
+            color: #292929;
+          }
         }
       }
     }
@@ -141,7 +149,8 @@ export default {
       }
     }
     &-cta {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
       padding: 15px 30px;
       border-radius: 5px;
       background: $brand-color;
@@ -152,11 +161,22 @@ export default {
 
       @include mobile {
         padding: 12px 25px;
-        font-size: .88rem;
+        font-size: 0.88rem;
+      }
+
+      i {
+        margin-left: 5px;
+        color: #fff;
+        font-size: 1.3rem;
+        transition: 0.25s ease;
       }
 
       &:hover {
         background: darken($color: $brand-color, $amount: 10%);
+
+        i {
+          transform: translateX(10px);
+        }
       }
     }
   }

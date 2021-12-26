@@ -7,20 +7,20 @@
         >
       </h2>
     </div>
-
+      <Input >
+        <input type="search" id="search" placeholder="Search blog..." autocomplete="off">
+      </Input>
     <nav class="nav">
       <ul>
         <li><router-link :to="{ name: 'dashboard' }">Home</router-link></li>
-        <!-- <li><router-link :to="{ name: 'home' }">Feeds</router-link></li> -->
+        <li><router-link :to="{ name: 'home' }">Posts</router-link></li>
         <li><router-link :to="{ name: 'profile' }">Profile</router-link></li>
       </ul>
     </nav>
 
-    <div class="user-pill">
+    <!-- <div class="user-pill">
       <Button buttonText="Add post" @click="showModal" class="btn"></Button>
-      <!-- <img src="@/assets/logo.png" alt="" />
-      <i class="bx bx-caret-down"></i> -->
-    </div>
+    </div> -->
 
     <span class="menu-icon" @click="showMenu">
       <i class="bx bx-menu"></i>
@@ -29,11 +29,12 @@
 </template>
 
 <script>
-import Button from "@/components/Button.vue";
+import Input from "@/components/Input.vue";
+
 export default {
   name: "Navbar",
   components: {
-    Button,
+    Input,
   },
   methods: {
     showModal() {
@@ -172,6 +173,28 @@ header {
             }
           }
         }
+      }
+    }
+  }
+
+  .input{
+    width: max-content;
+    align-self: center;
+    position: relative;
+    // border: 1px solid red;
+    margin: 0;
+
+    #search{
+      height: 35px;
+      width: 350px;
+      border: none;
+      border-radius: 5px;
+      padding: 0 7px;
+      outline: none;
+      // background: transparent;
+
+      &:focus{
+        border: 1px solid $brand-color;
       }
     }
   }

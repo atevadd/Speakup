@@ -3,26 +3,21 @@
     <Navbar @show-modal="openModal" />
 
     <div class="dashboard-area">
-      <div class="all-posts">
+      <div class="all-posts" v-if="allPosts">
         <div class="all-posts-header">
-          <h1 class="single" v-if="header">All post</h1>
-          <h1 class="plural" v-else>All posts</h1>
+          <h1 class="single">All posts</h1>
+          <Button buttonText="Add post" class="blog-cta" @click="openModal"/>
         </div>
-
-        <div class="all-posts-content">
-          <ArticleCard />
-          <ArticleCard />
-          <ArticleCard />
+        <div class="all-posts-content" >
+          <ArticleCard v-for="i in 3" :key="i"/>
         </div>
+        
       </div>
-      <div class="comments">
-        <div class="comments-header">
-          <h2>Recent comments</h2>
+      <div class="empty-state" v-else>
+          <img src="@/assets/not-found.svg" alt="">
+          <p>You have no blog post yet</p>
+          <Button buttonText="Add post" class="blog-cta" @click="openModal"/>
         </div>
-        <Comment />
-        <Comment />
-        <Comment />
-      </div>
     </div>
 
     <!-- <div class="post-modal" > -->
@@ -33,22 +28,23 @@
 
 <script>
 import Navbar from "@/components/Navbar.vue";
-import Comment from "@/components/Comment.vue";
+// import Comment from "@/components/Comment.vue";
 import ArticleCard from "@/components/ArticleCard.vue";
 import AddPost from "@/components/AddPost.vue";
+import Button from "@/components/Button.vue";
 
 export default {
   name: "Dashboard",
   components: {
     Navbar,
-    Comment,
     ArticleCard,
     AddPost,
+    Button,
   },
   data() {
     return {
-      header: true,
       showModal: false,
+      allPosts: true,
     };
   },
   methods: {
@@ -67,10 +63,9 @@ export default {
   position: relative;
   width: 100%;
   padding: 0 40px;
-  // border: 1px solid red;
   margin: 40px auto;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
+  display: flex;
+  align-items: flex-start;
   gap: 30px;
   align-items: flex-start;
 
@@ -112,6 +107,27 @@ export default {
 
     &-content {
       width: 100%;
+    }
+  }
+
+  .empty-state{
+    width: 100%;
+    margin: 0 auto;
+    // border: 2px solid red;
+
+    img{
+      width: 100%;
+      height: 200px;
+    }
+    p{
+      text-align: center;
+      font-weight: 500;
+      margin-bottom: 20px;
+      margin-top: 5px;
+    }
+    .blog-cta{
+      margin: 0 auto;
+      display: block;
     }
   }
 

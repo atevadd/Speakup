@@ -9,7 +9,7 @@
       </h2>
     </div>
 
-    <form class="login-form" @submit.prevent="submitForm">
+    <form class="login-form" @submit.prevent="loginUser">
       <p class="signup-response" v-if="msg">{{ msg }}</p>
       <Input>
         <label for="email">Email</label>
@@ -54,16 +54,16 @@ export default {
     msg: {
       type: String,
       required: false,
+      default: null
     },
   },
   data() {
     return {
       loginData: {
-        email: "",
-        password: "",
+        email: "todd@mail.com",
+        password: "password",
       },
       sendingRequest: false,
-      token: "",
     };
   },
   methods: {
@@ -78,12 +78,12 @@ export default {
         icon.className = "bx bxs-show";
       }
     },
-    submitForm() {
+    loginUser() {
       this.sendingRequest = true;
 
       const config = {
-        method: "post",
-        url: "https://myteamworkproject.herokuapp.com/v1/auth/signin",
+        method: "POST",
+        url: "https://tofumi-universal-api.herokuapp.com/api/v1/login",
         header: {
           "Content-Type": "application/json",
         },
@@ -92,10 +92,25 @@ export default {
 
       axios(config)
         .then((response) => {
-          console.log(response.data.data);
+          // console.log(response);
+          // storing the api response in the userInfo variable
+
+
+          // stores the user token in the session storage the user logs in
+          if(sessionStorage.getItem('access_token') === null){
+            sessionStorage.setItem("access_token", response.data.data.access_token)
+          } 
+
+          this.sendingRequest = false;
+
+          if(response.status === 200 || response.data.status === "success"){
+            this.$router.push({
+              name: "dashboard",
+          })
+          }
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err.response);
           this.sendingRequest = false;
         });
     },
@@ -232,7 +247,8 @@ export default {
       &.loading {
         position: relative;
         z-index: 2;
-        cursor: not-allowed;
+        cursor: wait;
+        color: rgb(167, 167, 167);
 
         &::before {
           content: "";
@@ -246,8 +262,8 @@ export default {
               60deg,
               transparent,
               transparent 10px,
-              lighten($color: $brand-color, $amount: 5%) 10px,
-              lighten($color: $brand-color, $amount: 5%) 20px
+              lighten($color: $brand-color, $amount: 10%) 10px,
+              lighten($color: $brand-color, $amount: 10%) 20px
             );
           z-index: -1;
           animation: loading 1s infinite linear;

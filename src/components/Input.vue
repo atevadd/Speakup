@@ -1,14 +1,6 @@
 <template>
   <div class="input">
-    <!-- <label :for="id">{{ label }}</label>
-    <input @input="$emit('update:inputValue', $event.target.value)" :type="inputtype" :id="id" :placeholder="placeholder" :value="inputValue" :autocomplete="complete" :accept="imgtype"/>
-    <span
-      @click="togglePassword"
-      class="toggle-password"
-      v-if="inputtype == 'password'"
-      ><i class="bx bxs-show"></i
-    ></span> -->
-    <slot></slot>
+     <slot></slot>
   </div>
 </template>
 

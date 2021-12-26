@@ -5,8 +5,17 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "App",
+  created() {
+    if (sessionStorage.getItem("access_token")) {
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${sessionStorage.getItem("access_token")}`;
+    }
+  },
 };
 </script>
 
@@ -31,28 +40,28 @@ body {
   overflow-x: hidden;
 }
 
-.router-enter-active{
-  animation: comingIn .05s linear .1s;
+.router-enter-active {
+  animation: comingIn 0.05s linear 0.1s;
   opacity: 0;
 }
-.router-leave-active{
-  animation: leaving .1s linear;
+.router-leave-active {
+  animation: leaving 0.1s linear;
 }
 
 @keyframes comingIn {
-  from{
+  from {
     opacity: 0;
   }
-  to{
+  to {
     opacity: 1;
   }
 }
 
 @keyframes leaving {
-  from{
+  from {
     opacity: 1;
   }
-  to{
+  to {
     opacity: 0;
   }
 }
