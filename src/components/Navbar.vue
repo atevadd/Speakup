@@ -44,7 +44,7 @@ export default {
       if (document.querySelector(".nav").style.height == "96px") {
         document.querySelector(".nav").style.height = "0px";
       } else {
-        for (let x = 0; x <= 96; x++) {
+        for (let x = 0; x <= 120; x++) {
           document.querySelector(".nav").style.height = `${x}px`;
         }
       }

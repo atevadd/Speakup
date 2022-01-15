@@ -10,7 +10,8 @@
     </div>
 
     <form class="login-form" @submit.prevent="loginUser">
-      <p class="signup-response" v-if="msg">{{ msg }}</p>
+      <p class="success" v-if="msg">{{ msg }}</p>
+      <p class="error" v-if="loginMessage">{{ loginMessage }}</p>
       <Input>
         <label for="email">Email</label>
         <input type="email" id="email" v-model="loginData.email" />
@@ -64,6 +65,7 @@ export default {
         password: "password",
       },
       sendingRequest: false,
+      loginMessage: "",
     };
   },
   methods: {
@@ -111,6 +113,7 @@ export default {
         })
         .catch((err) => {
           console.log(err.response);
+          this.loginMessage = err.response.data.message;
           this.sendingRequest = false;
         });
     },
@@ -195,6 +198,34 @@ export default {
       @include laptop {
         font-size: 0.85rem;
       }
+    }
+    .success, .error{
+      display: block;
+      text-align: center;
+      color: $white;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+
+      @include mobile {
+        font-size: 0.75rem;
+      }
+      @include tablet {
+        font-size: 0.82rem;
+      }
+      @include laptop {
+        font-size: 0.85rem;
+      }
+    }
+    
+    .success{
+      background-color: rgb(25, 217, 83);
+    }
+    .error{
+      background-color: #cc3636;
+      
     }
 
     label {

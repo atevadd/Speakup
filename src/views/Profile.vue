@@ -34,12 +34,16 @@
 
 <script>
 import Navbar from "@/components/Navbar.vue";
+import axios from "axios";
 
 export default {
   name: "Profile",
   components: {
     Navbar,
   },
+  // mounted(){
+  //   const config = {}
+  // }
 };
 </script>
 
