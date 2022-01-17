@@ -272,6 +272,11 @@ export default {
       overflow: hidden;
       z-index: 2;
 
+      &:focus{
+        outline: 1px solid #141414;
+        outline-offset: 5px;
+      }
+
       &.loading {
         position: relative;
         z-index: 2;

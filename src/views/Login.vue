@@ -94,9 +94,6 @@ export default {
 
       axios(config)
         .then((response) => {
-          // console.log(response);
-          // storing the api response in the userInfo variable
-
 
           // stores the user token in the session storage the user logs in
           if(sessionStorage.getItem('access_token') === null){
@@ -106,6 +103,7 @@ export default {
           this.sendingRequest = false;
 
           if(response.status === 200 || response.data.status === "success"){
+            localStorage.setItem('speakup-isLoggedIn', 'true');
             this.$router.push({
               name: "dashboard",
           })
@@ -274,6 +272,11 @@ export default {
       // background: transparent;
       overflow: hidden;
       z-index: 2;
+
+      &:focus{
+        outline: 1px solid #141414;
+        outline-offset: 5px;
+      }
 
       &.loading {
         position: relative;
