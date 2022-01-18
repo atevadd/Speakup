@@ -1,6 +1,6 @@
 <template>
-  <Navbar />
   <main class="profile">
+    <Navbar />
     <!-- <div class="profile-banner"></div> -->
     <div class="profile-container">
       <div class="img">
@@ -48,14 +48,14 @@
 
 <script>
 import Navbar from "@/components/Navbar.vue";
-import BaseModal from "@/components/BaseModal.vue";
+// import BaseModal from "@/components/BaseModal.vue";
 import axios from "axios";
 
 export default {
   name: "Profile",
   components: {
     Navbar,
-    BaseModal,
+    // BaseModal,
   },
   data() {
     return {
