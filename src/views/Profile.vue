@@ -1,10 +1,10 @@
 <template>
+  <Navbar />
   <main class="profile">
-    <Navbar />
     <!-- <div class="profile-banner"></div> -->
     <div class="profile-container">
       <div class="img">
-        <img :src="baseUrl + profileDetails.avatar" alt="" />
+        <img :src="baseUrl + profileDetails.avatar" alt="profile picture" />
       </div>
       <div class="profile-info">
         <div class="details">
@@ -32,36 +32,37 @@
     <!-- profile Buttons -->
     <div class="profile-cta">
       <button class="edit" aria-label="edit profile">Edit profile</button>
-      <button class="del" aria-label="delete profile">Delete profile</button>
+      <button class="del" aria-label="delete profile" @click="showDeleteModal = true">Delete profile</button>
     </div>
 
-    <!-- The confirm delete modal
-    <BaseModal class="modal">
+    <!-- The confirm delete modal -->
+    <BaseModal class="modal" v-if="showDeleteModal">
       <h1>Do you want to delete your account?</h1>
       <div class="btns">
-        <button class="no">No, cancel</button>
+        <button class="no" @click="showDeleteModal = false">No, cancel</button>
         <button class="yes">Yes, delete account</button>
       </div>
-    </BaseModal> -->
+    </BaseModal>
   </main>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar.vue";
-// import BaseModal from "@/components/BaseModal.vue";
+import BaseModal from "@/components/BaseModal.vue";
 import axios from "axios";
 
 export default {
   name: "Profile",
   components: {
     Navbar,
-    // BaseModal,
+    BaseModal,
   },
   data() {
     return {
       baseUrl:
         "https://tofumi-universal-api.herokuapp.com/api/v1/users/logged-in/",
       profileDetails: null,
+      showDeleteModal: false,
     };
   },
   created() {

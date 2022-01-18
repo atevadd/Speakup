@@ -25,12 +25,13 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: 1s ease;
 
   &-container {
     position: relative;
     background: #fff;
     border-radius: 10px;
-    padding: 20px 40px;
+    padding: 40px 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
