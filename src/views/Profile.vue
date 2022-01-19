@@ -60,7 +60,7 @@ export default {
   data() {
     return {
       baseUrl: "https://tofumi-universal-api.herokuapp.com/api/v1/users/",
-      profileDetails: null,
+      profileDetails: "",
       showDeleteModal: false
     };
   },
@@ -108,14 +108,10 @@ export default {
 
       axios(config)
         .then(response => {
-
           if (response.data.status === "success" || response.status === 200) {
             localStorage.setItem("speakup-isLoggedIn", "false");
 
-            localStorage.setItem(
-              "access_token",
-              ''
-            );
+            localStorage.setItem("access_token", "");
 
             // redirecting user after account has been deleted
             this.$router.push({
@@ -174,7 +170,10 @@ export default {
     }
     @include tablet {
       width: 90%;
-      grid-template-columns: 1fr 2fr;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 30px auto 10px;
     }
 
     .img {
@@ -206,6 +205,10 @@ export default {
       @include mobile {
         width: 100%;
         display: block;
+      }
+      @include tablet {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 40px 40px;
       }
 
       .details {
@@ -242,6 +245,9 @@ export default {
     transition: 0.2s ease;
 
     @include mobile {
+      width: 90%;
+    }
+    @include tablet {
       width: 90%;
     }
 
