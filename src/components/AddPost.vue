@@ -4,10 +4,10 @@
       <span @click="closeModal"><i class="bx bx-x"></i></span>
 
       <form class="add-post-form">
-        <Input id="title" label="title" inputtype="text" >
+        <BaseInput id="title" label="title" inputtype="text" >
           <label for="title">Title</label>
           <input type="text" id="title">
-        </Input>
+        </BaseInput>
         <Textarea label="Content" id="content" />
 
         <Button width="100%" buttonText ="Add post" />
@@ -17,14 +17,14 @@
 </template>
 
 <script>
-import Input from "@/components/Input.vue";
+import BaseInput from "@/components/BaseInput.vue";
 import Textarea from "@/components/Textarea.vue";
 import Button from "@/components/Button.vue";
 
 export default {
   name: "AddPost",
   components: {
-    Input,
+    BaseInput,
     Textarea,
     Button
   },

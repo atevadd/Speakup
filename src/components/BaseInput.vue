@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "Input",
+  name: "BaseInput",
   props: ["id", "label", "inputtype", "placeholder", 'complete','imgtype', 'inputValue'],
   emits:['update:inputValue'],
  methods: {

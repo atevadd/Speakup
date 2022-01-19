@@ -71,7 +71,7 @@ export default {
   methods: {
     // Load profile function
     loadProfile() {
-      let userToken = sessionStorage.getItem("access_token");
+      let userToken = localStorage.getItem("access_token");
 
       const config = {
         method: "GET",
@@ -94,7 +94,7 @@ export default {
     // delete profile
     deleteProfile() {
       let userId = this.profileDetails.id;
-      let userToken = sessionStorage.getItem("access_token");
+      let userToken = localStorage.getItem("access_token");
 
       // delete request config
       const config = {
@@ -112,7 +112,7 @@ export default {
           if (response.data.status === "success" || response.status === 200) {
             localStorage.setItem("speakup-isLoggedIn", "false");
 
-            sessionStorage.setItem(
+            localStorage.setItem(
               "access_token",
               ''
             );

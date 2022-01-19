@@ -11,7 +11,7 @@
     <form @submit.prevent="submitForm" class="signup-form">
       <div class="error" v-show="formError">{{ formError }}</div>
       <div class="error msg" v-show="msg">{{ msg }}</div>
-      <Input>
+      <BaseInput>
         <label for="fname">First name</label>
         <input
           type="text"
@@ -20,8 +20,8 @@
           autocomplete="off"
           inputmode="text"
         />
-      </Input>
-      <Input>
+      </BaseInput>
+      <BaseInput>
         <label for="lname">last name</label>
         <input
           type="text"
@@ -30,8 +30,8 @@
           autocomplete="off"
           inputmode="text"
         />
-      </Input>
-      <Input>
+      </BaseInput>
+      <BaseInput>
         <label for="email">Email</label>
         <input
           type="email"
@@ -40,12 +40,12 @@
           autocomplete="off"
           inputmode="email"
         />
-      </Input>
-      <Input>
+      </BaseInput>
+      <BaseInput>
         <label for="phone">Phone number</label>
         <input type="tel" id="phone" v-model="userData.phone" inputmode="tel" />
-      </Input>
-      <Input>
+      </BaseInput>
+      <BaseInput>
         <label for="passsword">Password</label>
         <input
           type="password"
@@ -57,8 +57,8 @@
         <span @click="togglePassword" class="toggle-password">
           <i class="bx bxs-show"></i>
         </span>
-      </Input>
-      <Input>
+      </BaseInput>
+      <BaseInput>
         <label for="cpassword">Confirm Password</label>
         <input
           type="password"
@@ -70,7 +70,7 @@
         <span @click="togglePassword" class="toggle-password">
           <i class="bx bxs-show"></i>
         </span>
-      </Input>
+      </BaseInput>
       <Button buttonText="Sign up" type="submit" width="100%" :class="{loading: sendingRequest}" />
     </form>
 
@@ -84,14 +84,14 @@
 </template>
 
 <script>
-import Input from "@/components/Input.vue";
+import BaseInput from "@/components/BaseInput.vue";
 import Button from "@/components/Button.vue";
 import axios from "axios";
 
 export default {
   name: "Signup",
   components: {
-    Input,
+    BaseInput,
     Button
   },
   props:{

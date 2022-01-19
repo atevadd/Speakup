@@ -7,9 +7,9 @@
         >
       </h2>
     </div>
-      <Input >
+      <BaseInput>
         <input type="search" id="search" placeholder="Search blog..." autocomplete="off">
-      </Input>
+      </BaseInput>
     <nav class="nav">
       <ul>
         <li><router-link :to="{ name: 'dashboard' }">Home</router-link></li>
@@ -29,12 +29,12 @@
 </template>
 
 <script>
-import Input from "@/components/Input.vue";
+import BaseInput from "@/components/BaseInput.vue";
 
 export default {
   name: "Navbar",
   components: {
-    Input,
+    BaseInput,
   },
   methods: {
     showModal() {

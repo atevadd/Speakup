@@ -13,17 +13,17 @@
     <form class="login-form" @submit.prevent="loginUser">
       <p class="success" v-show="msg">{{ msg }}</p>
       <p class="error" v-show="loginMessage">{{ loginMessage }}</p>
-      <Input>
+      <BaseInput>
         <label for="email">Email</label>
         <input type="email" id="email" v-model="loginData.email" />
-      </Input>
-      <Input>
+      </BaseInput>
+      <BaseInput>
         <label for="password">Password</label>
         <input type="password" id="password" v-model="loginData.password" />
         <span @click="togglePassword" class="toggle-password">
           <i class="bx bxs-show"></i>
         </span>
-      </Input>
+      </BaseInput>
 
       <Button
         type="submit"
@@ -42,14 +42,14 @@
 </template>
 
 <script>
-import Input from "@/components/Input.vue";
+import BaseInput from "@/components/BaseInput.vue";
 import Button from "@/components/Button.vue";
 import axios from "axios";
 
 export default {
   name: "Signup",
   components: {
-    Input,
+    BaseInput,
     Button
   },
   props: {
@@ -96,7 +96,7 @@ export default {
       axios(config)
         .then(response => {
           // stores the user token in the session storage the user logs in
-          sessionStorage.setItem(
+          localStorage.setItem(
             "access_token",
             response.data.data.access_token
           );
