@@ -1,22 +1,22 @@
 <template>
-  <transition name="router">
+  <!-- <transition name="router"> -->
     <router-view />
-  </transition>
+  <!-- </transition> -->
 </template>
 
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   name: "App",
-  created() {
-    if (sessionStorage.getItem("access_token")) {
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${sessionStorage.getItem("access_token")}`;
-    }
-  },
+  // created() {
+  //   if (sessionStorage.getItem("access_token")) {
+  //     axios.defaults.headers.common[
+  //       "Authorization"
+  //     ] = `Bearer ${sessionStorage.getItem("access_token")}`;
+  //   }
+  // },
 };
 </script>
 
