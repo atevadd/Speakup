@@ -85,7 +85,6 @@ export default {
 
       axios(config)
         .then(response => {
-          console.log(response.data.data);
           this.profileDetails = response.data.data;
         })
         .catch(error => {
@@ -109,7 +108,6 @@ export default {
 
       axios(config)
         .then(response => {
-          console.log(response);
 
           if (response.data.status === "success" || response.status === 200) {
             localStorage.setItem("speakup-isLoggedIn", "false");
