@@ -40,7 +40,7 @@
       <h1>Do you want to delete your account?</h1>
       <div class="btns">
         <button class="no" @click="showDeleteModal = false">No, cancel</button>
-        <button class="yes">Yes, delete account</button>
+        <button class="yes" @click="deleteProfile">Yes, delete account</button>
       </div>
     </BaseModal>
   </main>
@@ -55,14 +55,13 @@ export default {
   name: "Profile",
   components: {
     Navbar,
-    BaseModal,
+    BaseModal
   },
   data() {
     return {
-      baseUrl:
-        "https://tofumi-universal-api.herokuapp.com/api/v1/users/logged-in/",
+      baseUrl: "https://tofumi-universal-api.herokuapp.com/api/v1/users/",
       profileDetails: null,
-      showDeleteModal: false,
+      showDeleteModal: false
     };
   },
   created() {
@@ -76,41 +75,64 @@ export default {
 
       const config = {
         method: "GET",
-        url: "https://tofumi-universal-api.herokuapp.com/api/v1/users/logged-in",
+        url:
+          "https://tofumi-universal-api.herokuapp.com/api/v1/users/logged-in",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${userToken}`,
-        },
+          Authorization: `Bearer ${userToken}`
+        }
       };
 
       axios(config)
-        .then((response) => {
+        .then(response => {
           console.log(response.data.data);
           this.profileDetails = response.data.data;
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error.response);
         });
     },
     // delete profile
     deleteProfile() {
       let userId = this.profileDetails.id;
+      let userToken = sessionStorage.getItem("access_token");
 
       // delete request config
       const config = {
         method: "DELETE",
         url: `https://tofumi-universal-api.herokuapp.com/api/v1/users/${userId}`,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken}`
+        }
       };
 
       axios(config)
-        .then((response) => {
+        .then(response => {
           console.log(response);
+
+          if (response.data.status === "success" || response.status === 200) {
+            localStorage.setItem("speakup-isLoggedIn", "false");
+
+            sessionStorage.setItem(
+              "access_token",
+              ''
+            );
+
+            // redirecting user after account has been deleted
+            this.$router.push({
+              name: "signup",
+              params: {
+                msg: "Account deleted successfully"
+              }
+            });
+          }
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -249,7 +271,5 @@ export default {
       }
     }
   }
-
-  
 }
 </style>

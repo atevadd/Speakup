@@ -2,13 +2,15 @@
   <div class="signup">
     <h2 class="header">
       Signup to
-      <router-link class="logo" :to="{ name: 'home' }"
-        >Spe<span>ak</span>up</router-link
-      >
+      <router-link class="logo" :to="{ name: 'home' }">
+        Spe
+        <span>ak</span>up
+      </router-link>
     </h2>
 
     <form @submit.prevent="submitForm" class="signup-form">
       <div class="error" v-show="formError">{{ formError }}</div>
+      <div class="error msg" v-show="msg">{{ msg }}</div>
       <Input>
         <label for="fname">First name</label>
         <input
@@ -40,8 +42,8 @@
         />
       </Input>
       <Input>
-      <label for="phone">Phone number</label>
-      <input type="tel" id="phone" v-model="userData.phone" inputmode="tel">
+        <label for="phone">Phone number</label>
+        <input type="tel" id="phone" v-model="userData.phone" inputmode="tel" />
       </Input>
       <Input>
         <label for="passsword">Password</label>
@@ -52,28 +54,30 @@
           inputmode="text"
           autocomplete="new-password"
         />
-        <span @click="togglePassword" class="toggle-password"
-          ><i class="bx bxs-show"></i
-        ></span>
+        <span @click="togglePassword" class="toggle-password">
+          <i class="bx bxs-show"></i>
+        </span>
       </Input>
       <Input>
         <label for="cpassword">Confirm Password</label>
-        <input type="password" id="cpassword" v-model="userData.confirm_password" inputmode="text" autocomplete="new-password">
-        <span @click="togglePassword" class="toggle-password"
-          ><i class="bx bxs-show"></i
-        ></span>
+        <input
+          type="password"
+          id="cpassword"
+          v-model="userData.confirm_password"
+          inputmode="text"
+          autocomplete="new-password"
+        />
+        <span @click="togglePassword" class="toggle-password">
+          <i class="bx bxs-show"></i>
+        </span>
       </Input>
-      <Button
-        buttonText="Sign up"
-        type="submit"
-        width="100%"
-        :class="{loading: sendingRequest}"
-      />
+      <Button buttonText="Sign up" type="submit" width="100%" :class="{loading: sendingRequest}" />
     </form>
 
     <div class="login-container">
       <p>
-        Already a user? <router-link :to="{ name: 'login' }">Login</router-link>
+        Already a user?
+        <router-link :to="{ name: 'login' }">Login</router-link>
       </p>
     </div>
   </div>
@@ -88,7 +92,10 @@ export default {
   name: "Signup",
   components: {
     Input,
-    Button,
+    Button
+  },
+  props:{
+    msg: String,
   },
   data() {
     return {
@@ -98,10 +105,10 @@ export default {
         phone: "",
         email: "",
         password: "",
-        confirm_password: "",
+        confirm_password: ""
       },
       sendingRequest: false,
-      formError: null,
+      formError: null
     };
   },
   methods: {
@@ -112,9 +119,9 @@ export default {
         method: "POST",
         url: "https://tofumi-universal-api.herokuapp.com/api/v1/register",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        data: JSON.stringify(this.userData),
+        data: this.userData
       };
 
       // console.log(this.userData)
@@ -123,7 +130,7 @@ export default {
 
       // Submitting the user data to the API
       axios(config)
-        .then((response) => {
+        .then(response => {
           // console.log(response);
 
           this.formError = null;
@@ -132,18 +139,16 @@ export default {
             this.$router.push({
               name: "login",
               params: {
-                msg: "Your account has been created",
-              },
+                msg: "Your account has been created"
+              }
             });
           }
         })
-        .catch((error) => {
-          if (error.message.includes("400")) {
-            this.formError = "Email already exist";
-          } else {
-            this.formError = "oops! an error occurred";
+        .catch(error => {
+          if (error.response.data.message != null) {
+            this.formError = error.response.data.errors.email[0];
           }
-          console.log(error);
+          console.log(error.response);
 
           this.sendingRequest = false;
         });
@@ -160,8 +165,19 @@ export default {
         passwordField.type = "password";
         icon.className = "bx bxs-show";
       }
-    },
+    }
   },
+  mounted(){
+    if(this.msg != null){
+      setTimeout(() =>{
+        document.querySelector(".msg").remove();
+      }, 4000)
+    }else if(this.formError !== null){
+      setTimeout(() =>{
+        this.formError = null
+      }, 4000)
+    }
+  }
 };
 </script>
 
@@ -267,12 +283,12 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background .25s ease;
+      transition: background 0.25s ease;
       // background: transparent;
       overflow: hidden;
       z-index: 2;
 
-      &:focus{
+      &:focus {
         outline: 1px solid #141414;
         outline-offset: 5px;
       }

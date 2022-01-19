@@ -2,33 +2,35 @@
   <main class="landing">
     <header>
       <div class="brand-logo">
-        <router-link class="logo" :to="{ name: 'home' }"
-          >Spe<span>ak</span>up</router-link
-        >
+        <router-link class="logo" :to="{ name: 'home' }">
+          Spe
+          <span>ak</span>up
+        </router-link>
       </div>
       <nav>
-        <router-link :to="{ name: 'login' }" class="login-cta"
-          >login</router-link
-        >
+        <router-link :to="{ name: 'login' }" class="login-cta">login</router-link>
         <!-- <router-link :to="{ name: 'signup' }" class="signup-cta"
           >Signup</router-link
-        > -->
+        >-->
       </nav>
     </header>
 
     <section class="hero">
       <h1 class="hero-headline">
-        Feel <span>free</span> to say what <span>you</span> want to say when you
+        Feel
+        <span>free</span> to say what
+        <span>you</span> want to say when you
         want to📝
       </h1>
       <!-- <p class="hero-subtext">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium,
         reiciendis minima dignissimos quisquam expedita tempora dolorem
         voluptatum hic doloribus harum?
-      </p> -->
-      <router-link class="hero-cta" :to="{ name: 'signup' }"
-        >Get Started <i class="bx bx-right-arrow-alt"></i
-      ></router-link>
+      </p>-->
+      <router-link class="hero-cta" :to="{ name: 'signup' }">
+        Get Started
+        <i class="bx bx-right-arrow-alt"></i>
+      </router-link>
     </section>
   </main>
 </template>
@@ -36,6 +38,13 @@
 <script>
 export default {
   name: "Home",
+  created() {
+    if (localStorage.getItem("speakup-isLoggedIn") === "true") {
+      this.$router.push({
+        name: "dashboard"
+      });
+    }
+  }
 };
 </script>
 

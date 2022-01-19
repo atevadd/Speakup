@@ -3,15 +3,16 @@
     <div class="brand-logo">
       <h2>
         Sign in to
-        <router-link class="logo" :to="{ name: 'home' }"
-          >Spe<span>ak</span>up</router-link
-        >
+        <router-link class="logo" :to="{ name: 'home' }">
+          Spe
+          <span>ak</span>up
+        </router-link>
       </h2>
     </div>
 
     <form class="login-form" @submit.prevent="loginUser">
-      <p class="success" v-if="msg">{{ msg }}</p>
-      <p class="error" v-if="loginMessage">{{ loginMessage }}</p>
+      <p class="success" v-show="msg">{{ msg }}</p>
+      <p class="error" v-show="loginMessage">{{ loginMessage }}</p>
       <Input>
         <label for="email">Email</label>
         <input type="email" id="email" v-model="loginData.email" />
@@ -19,8 +20,8 @@
       <Input>
         <label for="password">Password</label>
         <input type="password" id="password" v-model="loginData.password" />
-        <span @click="togglePassword" class="toggle-password"
-          ><i class="bx bxs-show"></i>
+        <span @click="togglePassword" class="toggle-password">
+          <i class="bx bxs-show"></i>
         </span>
       </Input>
 
@@ -49,23 +50,23 @@ export default {
   name: "Signup",
   components: {
     Input,
-    Button,
+    Button
   },
   props: {
     msg: {
       type: String,
       required: false,
       default: null
-    },
+    }
   },
   data() {
     return {
       loginData: {
-        email: "todd@mail.com",
-        password: "password",
+        email: "",
+        password: ""
       },
       sendingRequest: false,
-      loginMessage: "",
+      loginMessage: null
     };
   },
   methods: {
@@ -87,37 +88,42 @@ export default {
         method: "POST",
         url: "https://tofumi-universal-api.herokuapp.com/api/v1/login",
         header: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        data: this.loginData,
+        data: this.loginData
       };
 
       axios(config)
-        .then((response) => {
-
+        .then(response => {
           // stores the user token in the session storage the user logs in
-          if(sessionStorage.getItem('access_token') === null){
-            sessionStorage.setItem("access_token", response.data.data.access_token)
-          } 
+          sessionStorage.setItem(
+            "access_token",
+            response.data.data.access_token
+          );
 
           this.sendingRequest = false;
 
-          if(response.status === 200 || response.data.status === "success"){
-            localStorage.setItem('speakup-isLoggedIn', 'true');
+          if (response.status === 200 || response.data.status === "success") {
+            localStorage.setItem("speakup-isLoggedIn", "true");
             this.$router.push({
-              name: "dashboard",
-          })
+              name: "dashboard"
+            });
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err.response);
           this.loginMessage = err.response.data.message;
           this.sendingRequest = false;
+
+          // removing the login message after 4s
+          setTimeout(() => {
+            this.loginMessage = null;
+          }, 4000);
         });
     },
     removeSignupResponse() {
-      document.querySelector(".signup-response").remove();
-    },
+      document.querySelector(".success").remove();
+    }
   },
   mounted() {
     if (this.msg !== null) {
@@ -125,7 +131,7 @@ export default {
         this.removeSignupResponse();
       }, 4000);
     }
-  },
+  }
 };
 </script>
 
@@ -180,7 +186,7 @@ export default {
     .signup-response {
       display: block;
       text-align: center;
-      background-color: rgb(25, 217, 83);
+      background-color: rgb(24, 146, 61);
       color: $white;
       padding: 10px;
       border-radius: 5px;
@@ -197,7 +203,8 @@ export default {
         font-size: 0.85rem;
       }
     }
-    .success, .error{
+    .success,
+    .error {
       display: block;
       text-align: center;
       color: $white;
@@ -217,13 +224,12 @@ export default {
         font-size: 0.85rem;
       }
     }
-    
-    .success{
-      background-color: rgb(25, 217, 83);
+
+    .success {
+      background-color: rgb(23, 139, 58);
     }
-    .error{
+    .error {
       background-color: #cc3636;
-      
     }
 
     label {
@@ -273,7 +279,7 @@ export default {
       overflow: hidden;
       z-index: 2;
 
-      &:focus{
+      &:focus {
         outline: 1px solid #141414;
         outline-offset: 5px;
       }
