@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{name:'singlepost', params:{id: postid} }">
+  <router-link :to="{name:'singlepost', params:{id: postid, pagetitles: title} }">
     <section class="card">
       <h2>{{ title }}</h2>
       <p>{{ content }}</p>

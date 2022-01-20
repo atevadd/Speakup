@@ -31,7 +31,13 @@
     </div>
     <!-- profile Buttons -->
     <div class="profile-cta">
-      <button class="edit" aria-label="edit profile" @click="toggleEditModal(true)">Edit profile</button>
+      <button
+        class="edit"
+        aria-label="edit profile"
+        @click="toggleEditModal(true)"
+      >
+        Edit profile
+      </button>
       <button
         class="del"
         aria-label="delete profile"
@@ -42,7 +48,7 @@
     </div>
 
     <!-- The confirm delete modal -->
-    <BaseModal class="modal" v-if="showDeleteModal">
+    <BaseModal v-if="showDeleteModal">
       <div class="modal-container">
         <h1>Do you want to delete your account?</h1>
         <div class="btns">
@@ -57,36 +63,47 @@
     </BaseModal>
 
     <!-- edit profile modal -->
-    <BaseModal class="edit-modal" v-if="showEditModal">
+    <BaseModal v-if="showEditModal">
       <form @submit.prevent="editProfile">
+        <header>
+          <h1>Edit your profile</h1>
+        </header>
         <div class="close-modal" @click="toggleEditModal(false)">
           <i class="bx bx-x"></i>
         </div>
-        <div class="input-box">
+        <!-- <div class="input-box">
           <label for="picture">Change profile picture</label>
           <input type="file" id="picture" accept="image/*"  @change="displayFileName"/>
           <span class="filename">{{ fileName }}</span>
-        </div>
+        </div> -->
 
         <div class="group">
           <div class="input-box">
             <label for="fname">First name</label>
-            <input type="text" id="fname" v-model="editProfileDetails.firstName"/>
+            <input
+              type="text"
+              id="fname"
+              v-model="editProfileDetails.firstName"
+            />
           </div>
           <div class="input-box">
             <label for="lname">Last name</label>
-            <input type="text" id="lname" v-model="editProfileDetails.lastName"/>
+            <input
+              type="text"
+              id="lname"
+              v-model="editProfileDetails.lastName"
+            />
           </div>
         </div>
 
         <div class="group">
           <div class="input-box">
             <label for="email">Email</label>
-            <input type="email" id="email"  v-model="editProfileDetails.email"/>
+            <input type="email" id="email" v-model="editProfileDetails.email" />
           </div>
           <div class="input-box">
             <label for="phone">Phone number</label>
-            <input type="tel" id="phone"  v-model="editProfileDetails.phone"/>
+            <input type="tel" id="phone" v-model="editProfileDetails.phone" />
           </div>
         </div>
 
@@ -111,15 +128,17 @@ export default {
     return {
       baseUrl: "https://tofumi-universal-api.herokuapp.com/api/v1/users/",
       profileDetails: "",
-      editProfileDetails:{
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
+      editProfileDetails: {
+        avatar: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
       },
+      imageDetails: "",
       showDeleteModal: false,
       showEditModal: false,
-      fileName: '',
+      fileName: "",
     };
   },
   created() {
@@ -128,15 +147,17 @@ export default {
   },
   methods: {
     //  function to toggle the edit modal
-    toggleEditModal(value){
-      this.showEditModal = value
+    toggleEditModal(value) {
+      this.showEditModal = value;
     },
     // this function displays the image name after selection
-    displayFileName(e){
+    displayFileName(e) {
       const [files] = e.target.files;
 
       // displaying the file name
       this.fileName = files.name;
+
+      this.imageDetails = e.target.files[0];
     },
     // Load profile function
     loadProfile() {
@@ -157,10 +178,22 @@ export default {
           this.profileDetails = response.data.data;
 
           // desctructuring with an alias
-          const {first_name: firstName, last_name: lastName, email, phone} = response.data.data;
+          const {
+            first_name: firstName,
+            last_name: lastName,
+            email,
+            phone,
+            avatar,
+          } = response.data.data;
 
           //setting the value of editprofile data to the destructured variables
-          this.editProfileDetails = {firstName, lastName, email, phone}
+          this.editProfileDetails = {
+            avatar,
+            firstName,
+            lastName,
+            email,
+            phone,
+          };
         })
         .catch((error) => {
           console.log(error.response);
@@ -202,8 +235,12 @@ export default {
         });
     },
     // edit profile function
-    editProfile(){
-      console.log(this.editProfileDetails)
+    editProfile() {
+      console.log(this.imageDetails);
+
+      const formData = new FormData();
+
+      console.log(formData);
     },
   },
 };
@@ -239,6 +276,7 @@ export default {
     grid-template-columns: 1fr 3fr;
     border: 1px solid;
     align-items: flex-start;
+    gap: 0 20px;
 
     @include mobile {
       width: 90%;
@@ -258,12 +296,16 @@ export default {
     .img {
       width: 200px;
       height: 200px;
-      // border: 2px solid red;
+      border: 2px solid red;
       overflow: hidden;
+      border-radius: 50%;
 
       @include mobile {
         width: 100px;
         height: 100px;
+      }
+      @include tablet{
+          margin-right: 15px;
       }
 
       img {
@@ -279,7 +321,7 @@ export default {
       // border: 2px solid;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 40px 0;
+      gap: 40px 20px;
 
       @include mobile {
         width: 100%;
@@ -314,10 +356,8 @@ export default {
   }
 
   &-cta {
-    // border: 1px solid;
     width: 70%;
     margin: 0 auto;
-    // padding: 15px 0;
     display: flex;
     align-items: center;
     gap: 0 20px;
@@ -355,273 +395,251 @@ export default {
     }
   }
 
-  .modal {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba($color: #000000, $alpha: 0.6);
+  .modal-container {
+    position: relative;
+    background: #fff;
+    border-radius: 10px;
+    padding: 40px 40px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: 1s ease;
-    z-index: 10;
-    animation: reveal .2s ease;
 
-    &-container {
-      position: relative;
-      background: #fff;
-      border-radius: 10px;
-      padding: 40px 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    @include mobile {
+      width: 90%;
+    }
+    @include tablet {
+      width: 80%;
+    }
+    @include laptop {
+      width: 60%;
+    }
+
+    h1 {
+      font-size: 1.3rem;
+      color: #333;
+      padding: 0 20px;
+      text-align: center;
 
       @include mobile {
-        width: 80%;
+        padding: 0;
+        font-size: 1.2rem;
       }
-      @include tablet {
-        width: 80%;
-      }
-      @include laptop {
-        width: 80%;
+    }
+    .btns {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0 20px;
+
+      @include mobile {
+        flex-direction: column;
+        //   border: 1px solid red;
       }
 
-      h1 {
-        font-size: 1.3rem;
-        color: #333;
-        padding: 0 20px;
-        text-align: center;
+      button {
+        padding: 12px 25px;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
 
         @include mobile {
-          padding: 0;
-          font-size: 1.2rem;
-        }
-      }
-      .btns {
-        margin-top: 20px;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0 20px;
-
-        @include mobile {
-          flex-direction: column;
-          //   border: 1px solid red;
+          margin-top: 10px;
         }
 
-        button {
-          padding: 12px 25px;
-          outline: none;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
+        &.no {
+          background: transparent;
 
-          @include mobile {
-            margin-top: 10px;
-          }
-
-          &.no {
-            background: transparent;
-
-            &:hover {
-              font-weight: 500;
-            }
-          }
-          &.yes {
-            color: #c11515;
+          &:hover {
             font-weight: 500;
+          }
+        }
+        &.yes {
+          color: #c11515;
+          font-weight: 500;
 
-            &:hover {
-              background: #c115153c;
-            }
+          &:hover {
+            background: #c115153c;
           }
         }
       }
     }
   }
 
-  .edit-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    z-index: 10;
-    background-color: rgba($color: #000000, $alpha: 0.6);
+  form {
+    position: relative;
+    background-color: #fff;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    display: block;
+    animation: slidedown 0.5s ease;
 
-    form {
-      position: relative;
-      background-color: #fff;
-      margin: auto;
-      padding: 20px;
-      border-radius: 10px;
+    @include mobile {
+      width: 90%;
+    }
+    @include tablet {
+      width: 80%;
+    }
+    @include laptop {
+      width: 50%;
+    }
+
+    header {
+      margin-bottom: 25px;
+
+      h1 {
+        color: #333;
+        font-weight: 700;
+        font-size: 1.5rem;
+      }
+    }
+
+    .close-modal {
+      background: #fff;
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      right: 0;
+      top: -40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: 0.15s ease;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #d9d9d9;
+      }
+
+      i {
+        font-size: 1.4rem;
+      }
+    }
+
+    .input-box {
+      @include mobile {
+        margin-bottom: 15px;
+      }
+    }
+
+    & > .input-box {
       display: block;
-      animation: slidedown .5s ease;
+      margin-bottom: 20px;
 
-      @include mobile{
-          width: 90%;
-      }
-      @include tablet{
-        width: 80%;
-      }
-      @include laptop{
-        width: 45%;
-      }
-
-      .close-modal {
-        background: #fff;
-        width: 30px;
-        height: 30px;
-        position: absolute;
-        right: 0;
-        top: -40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        transition: 0.15s ease;
-        cursor: pointer;
-
-        &:hover{
-            background-color: #d9d9d9;
-          }
-
-        i{
-          font-size: 1.4rem;
-        
-        }
-      }
-
-      .input-box{
-        @include mobile{
-          margin-bottom: 15px;
-        }
-      }
-
-      & > .input-box{
-        display: block;
-        margin-bottom: 20px;
-
-        & > label{
-          display: inline-block;
-          font-size: .75rem;
-          padding: 10px 20px;
-          background-color: lighten($color: $brand-color, $amount: 30%);
-          border-radius: 5px;
-          color: #141414;
-          font-weight: 500;
-          cursor: pointer;
-          margin-right: 10px;
-        }
-
-        input{
-          display: none;
-        }
-        span{
-          color: #777777;
-          font-size: .8rem;
-        }
-      }
-
-      .group {
-        width: 100%;
-        // border: 1px solid ;
-        margin-bottom: 25px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0 30px;
-
-        @include mobile{
-          display: block;
-          margin-bottom: 0;
-        }
-
-        &:last-child {
-          margin-bottom: 0;
-        }
-
-        .input-box {
-          width: 100%;
-
-          label,
-          input {
-            display: block;
-          }
-          input {
-            display: block;
-            width: 100%;
-            height: 35px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 0 7px;
-
-            &:focus {
-              border: 1px solid $brand-color;
-              outline: none;
-            }
-          }
-          label {
-            font-weight: 400;
-            color: #141414;
-            font-size: 0.8rem;
-            line-height: 1.5;
-          }
-        }
-      }
-
-      button{
-        display: block;
-        width: 100%;
-        padding: 15px 0;
-        cursor:pointer;
-        outline: none;
-        border: none;
-        background-color: $brand-color;
-        color: #fff;
-        font-weight: 600;
+      & > label {
+        display: inline-block;
+        font-size: 0.75rem;
+        padding: 10px 20px;
+        background-color: lighten($color: $brand-color, $amount: 30%);
         border-radius: 5px;
-        transition: .15s ease;
+        color: #141414;
+        font-weight: 500;
+        cursor: pointer;
+        margin-right: 10px;
+      }
 
-        &:hover{
-          background-color: darken($color: $brand-color, $amount: 10%);
-        }
+      input {
+        display: none;
+      }
+      span {
+        color: #777777;
+        font-size: 0.8rem;
+      }
+    }
 
-        &:focus{
-          outline: 1px solid #141414;
-          outline-offset: 5px;
+    .group {
+      width: 100%;
+      // border: 1px solid ;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0 30px;
+
+      @include mobile {
+        display: block;
+        margin-bottom: 0;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .input-box {
+        width: 100%;
+
+        label,
+        input {
+          display: block;
         }
+        input {
+          display: block;
+          width: 100%;
+          height: 35px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          padding: 0 7px;
+
+          &:focus {
+            border: 1px solid $brand-color;
+            outline: none;
+          }
+        }
+        label {
+          font-weight: 400;
+          color: #141414;
+          font-size: 0.8rem;
+          line-height: 1.5;
+        }
+      }
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 15px 0;
+      cursor: pointer;
+      outline: none;
+      border: none;
+      background-color: $brand-color;
+      color: #fff;
+      font-weight: 600;
+      border-radius: 5px;
+      transition: 0.15s ease;
+
+      &:hover {
+        background-color: darken($color: $brand-color, $amount: 10%);
+      }
+
+      &:focus {
+        outline: 1px solid #141414;
+        outline-offset: 5px;
       }
     }
   }
 }
 
-
 @keyframes slidedown {
-  0%{
-     opacity: 0; 
-     transform: translateY(100px);
+  0% {
+    opacity: 0;
+    transform: translateY(100px);
   }
-  100%{
-     opacity: 1; 
-     transform: translateY(0);  
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 @keyframes reveal {
-  0%{
-     opacity: 0; 
+  0% {
+    opacity: 0;
   }
-  100%{
-     opacity: 1; 
+  100% {
+    opacity: 1;
   }
 }
 </style>
