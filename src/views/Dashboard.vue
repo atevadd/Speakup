@@ -10,7 +10,7 @@
         </div>
         <!-- All post listing -->
         <div class="all-posts-content" >
-          <ArticleCard v-for="i in 3" :key="i" :postid="(i)"/>
+          <ArticleCard v-for="i in 3" :key="i" :postid="(i)" title="my first blog"/>
         </div>
         
       </div>

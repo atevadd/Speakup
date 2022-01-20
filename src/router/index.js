@@ -81,7 +81,14 @@ const router = createRouter({
 // changing the page title dynamically
 router.beforeEach((to, from, next) =>{
   console.log(to)
-  document.title = `${to.meta.title}`
+  console.log(from)
+
+  if(to.name === "singlepost"){
+    document.title = `${to.meta.title} - ${to.params.title}`
+  }else{
+    document.title = `${to.meta.title}`
+  }
+  
   next()
 })
 

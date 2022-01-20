@@ -7,9 +7,14 @@
         >
       </h2>
     </div>
-      <BaseInput>
-        <input type="search" id="search" placeholder="Search blog..." autocomplete="off">
-      </BaseInput>
+    <BaseInput>
+      <input
+        type="search"
+        id="search"
+        placeholder="Search blog..."
+        autocomplete="off"
+      />
+    </BaseInput>
     <nav class="nav">
       <ul>
         <li><router-link :to="{ name: 'dashboard' }">Home</router-link></li>
@@ -104,7 +109,7 @@ header {
       @include tablet {
         height: 0;
       }
-      @include laptop{
+      @include laptop {
         height: auto !important;
       }
     }
@@ -177,14 +182,14 @@ header {
     }
   }
 
-  .input{
+  .input {
     width: max-content;
     align-self: center;
     position: relative;
     // border: 1px solid red;
     margin: 0;
 
-    #search{
+    #search {
       height: 35px;
       width: 350px;
       border: none;
@@ -193,7 +198,7 @@ header {
       outline: none;
       // background: transparent;
 
-      &:focus{
+      &:focus {
         border: 1px solid $brand-color;
       }
     }

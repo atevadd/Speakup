@@ -4,7 +4,7 @@
     <!-- <div class="profile-banner"></div> -->
     <div class="profile-container">
       <div class="img">
-        <img :src="baseUrl + profileDetails.avatar" alt="profile picture" />
+        <img :src="profileDetails.avatar" alt="profile picture" />
       </div>
       <div class="profile-info">
         <div class="details">
@@ -75,7 +75,7 @@
           </div>
           <div class="input-box">
             <label for="lname">Last name</label>
-            <input type="text" id="lname" v-model="editProfileDetails.LastName"/>
+            <input type="text" id="lname" v-model="editProfileDetails.lastName"/>
           </div>
         </div>
 
@@ -112,7 +112,6 @@ export default {
       baseUrl: "https://tofumi-universal-api.herokuapp.com/api/v1/users/",
       profileDetails: "",
       editProfileDetails:{
-        img: '',
         firstName: '',
         lastName: '',
         email: '',
@@ -128,9 +127,11 @@ export default {
     this.loadProfile();
   },
   methods: {
+    //  function to toggle the edit modal
     toggleEditModal(value){
       this.showEditModal = value
     },
+    // this function displays the image name after selection
     displayFileName(e){
       const [files] = e.target.files;
 
@@ -152,14 +153,20 @@ export default {
 
       axios(config)
         .then((response) => {
+          //storing the API response in the profileDetails data
           this.profileDetails = response.data.data;
-          // ({this.editProfileDetails} = this.profileDetails)
+
+          // desctructuring with an alias
+          const {first_name: firstName, last_name: lastName, email, phone} = response.data.data;
+
+          //setting the value of editprofile data to the destructured variables
+          this.editProfileDetails = {firstName, lastName, email, phone}
         })
         .catch((error) => {
           console.log(error.response);
         });
     },
-    // delete profile
+    // delete profile function
     deleteProfile() {
       let userId = this.profileDetails.id;
       let userToken = localStorage.getItem("access_token");
@@ -194,7 +201,7 @@ export default {
           console.log(error);
         });
     },
-
+    // edit profile function
     editProfile(){
       console.log(this.editProfileDetails)
     },
@@ -450,7 +457,6 @@ export default {
     display: flex;
     z-index: 10;
     background-color: rgba($color: #000000, $alpha: 0.6);
-    // animation: reveal .2s ease;
 
     form {
       position: relative;
