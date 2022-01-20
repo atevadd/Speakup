@@ -8,11 +8,13 @@
           <h1 class="single">All posts</h1>
           <Button buttonText="Add post" class="blog-cta" @click="openModal"/>
         </div>
+        <!-- All post listing -->
         <div class="all-posts-content" >
-          <ArticleCard v-for="i in 3" :key="i"/>
+          <ArticleCard v-for="i in 3" :key="i" :postid="(i)"/>
         </div>
         
       </div>
+      <!-- when the user has no post yet -->
       <div class="empty-state" v-else>
           <img src="@/assets/not-found.svg" alt="">
           <p>You have no blog post yet</p>
@@ -87,7 +89,6 @@ export default {
   }
 
   .all-posts {
-    // border: 1px solid ;
     position: relative;
     display: block;
 

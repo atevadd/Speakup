@@ -42,5 +42,9 @@ button {
   &:hover {
     background: darken($color: $brand-color, $amount: 10%);
   }
+  &:focus{
+    outline: 1px solid #141414;
+    outline-offset: 5px;
+  }
 }
 </style>

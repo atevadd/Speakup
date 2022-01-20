@@ -13,7 +13,7 @@
     <nav class="nav">
       <ul>
         <li><router-link :to="{ name: 'dashboard' }">Home</router-link></li>
-        <li><router-link :to="{ name: 'home' }">Posts</router-link></li>
+        <li><router-link :to="{ name: 'post' }">Posts</router-link></li>
         <li><router-link :to="{ name: 'profile' }">Profile</router-link></li>
       </ul>
     </nav>

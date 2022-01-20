@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{name:'post', params:{id: 10} }">
+  <router-link :to="{name:'singlepost', params:{id: postid} }">
     <section class="card">
       <h2>{{ title }}</h2>
       <p>{{ content }}</p>
@@ -21,6 +21,7 @@ export default {
           required: false,
           default: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, dignissimos aspernatur et nesciunt tenetur illo sit autem officia at porro impedit reprehenderit dolorem quos harum inventore facere dicta commodi laudantium."
       },
+      postid: Number,
 
   }
 };

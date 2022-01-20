@@ -48,7 +48,7 @@ const routes = [{
   },
   {
     path: '/post/:id',
-    name: 'post',
+    name: 'singlepost',
     component: () => import( /* webpackChunkName: "post" */ '../views/Post.vue'),
     props: true,
     meta: {
@@ -62,6 +62,14 @@ const routes = [{
     meta: {
       title: "Speakup - Profile"
     }
+  },
+  {
+    path: '/user/posts',
+    name: 'post',
+    component: () => import( /* webpackChunkName: "profile" */ '../views/Allpost.vue'),
+    meta: {
+      title: "Speakup - All posts"
+    }
   }
 ]
 
@@ -72,6 +80,7 @@ const router = createRouter({
 
 // changing the page title dynamically
 router.beforeEach((to, from, next) =>{
+  console.log(to)
   document.title = `${to.meta.title}`
   next()
 })

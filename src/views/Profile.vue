@@ -58,35 +58,35 @@
 
     <!-- edit profile modal -->
     <BaseModal class="edit-modal" v-if="showEditModal">
-      <form>
+      <form @submit.prevent="editProfile">
         <div class="close-modal" @click="toggleEditModal(false)">
           <i class="bx bx-x"></i>
         </div>
         <div class="input-box">
           <label for="picture">Change profile picture</label>
-          <input type="file" id="picture" accept="images/*"  @change="displayFileName"/>
+          <input type="file" id="picture" accept="image/*"  @change="displayFileName"/>
           <span class="filename">{{ fileName }}</span>
         </div>
 
         <div class="group">
           <div class="input-box">
             <label for="fname">First name</label>
-            <input type="text" id="fname" />
+            <input type="text" id="fname" v-model="editProfileDetails.firstName"/>
           </div>
           <div class="input-box">
             <label for="lname">Last name</label>
-            <input type="text" id="lname" />
+            <input type="text" id="lname" v-model="editProfileDetails.LastName"/>
           </div>
         </div>
 
         <div class="group">
           <div class="input-box">
             <label for="email">Email</label>
-            <input type="email" id="email" />
+            <input type="email" id="email"  v-model="editProfileDetails.email"/>
           </div>
           <div class="input-box">
             <label for="phone">Phone number</label>
-            <input type="tel" id="phone" />
+            <input type="tel" id="phone"  v-model="editProfileDetails.phone"/>
           </div>
         </div>
 
@@ -111,6 +111,13 @@ export default {
     return {
       baseUrl: "https://tofumi-universal-api.herokuapp.com/api/v1/users/",
       profileDetails: "",
+      editProfileDetails:{
+        img: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+      },
       showDeleteModal: false,
       showEditModal: false,
       fileName: '',
@@ -146,6 +153,7 @@ export default {
       axios(config)
         .then((response) => {
           this.profileDetails = response.data.data;
+          // ({this.editProfileDetails} = this.profileDetails)
         })
         .catch((error) => {
           console.log(error.response);
@@ -185,6 +193,10 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+
+    editProfile(){
+      console.log(this.editProfileDetails)
     },
   },
 };
@@ -441,7 +453,6 @@ export default {
     // animation: reveal .2s ease;
 
     form {
-      width: 50%;
       position: relative;
       background-color: #fff;
       margin: auto;
@@ -457,7 +468,7 @@ export default {
         width: 80%;
       }
       @include laptop{
-        width: 50%;
+        width: 45%;
       }
 
       .close-modal {
@@ -592,7 +603,7 @@ export default {
 @keyframes slidedown {
   0%{
      opacity: 0; 
-     transform: translateY(-100px);
+     transform: translateY(100px);
   }
   100%{
      opacity: 1; 
