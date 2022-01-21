@@ -1,45 +1,44 @@
 <template>
-  <div class="input">
-      <label :for="id">{{ label }}</label>
-      <textarea name="" :id="id"></textarea>
-  </div>
+    <div class="input">
+        <slot></slot>
+    </div>
 </template>
 
 <script>
 export default {
     name: "Textarea",
-    props: ["id", "label"],
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .input {
-  position: relative;
-  width: 100%;
-  margin-bottom: 20px;
-
-  label {
-    display: block;
-    font-size: 0.83rem;
-    color: #5a5a5a;
-    margin-bottom: 3px;
-    text-transform: capitalize;
-  }
-
-  textarea {
-    display: block;
     position: relative;
-    height: 200px;
     width: 100%;
-    border-radius: 5px;
-    border: 1px solid #aaa;
-    padding: 10px;
-    outline: none;
-    resize: none;
+    margin-bottom: 20px;
 
-    &:focus {
-      border: 1px solid $brand-color;
+    label {
+        display: block;
+        font-size: 0.83rem;
+        color: #5a5a5a;
+        margin-bottom: 3px;
+        text-transform: capitalize;
+        font-weight: 600;
     }
-  }
+
+    textarea {
+        display: block;
+        position: relative;
+        height: 200px;
+        width: 100%;
+        border-radius: 5px;
+        border: 1px solid #aaa;
+        padding: 10px;
+        outline: none;
+        resize: none;
+
+        &:focus {
+            border: 1px solid $brand-color;
+        }
+    }
 }
 </style>
