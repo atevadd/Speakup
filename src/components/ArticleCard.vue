@@ -71,6 +71,10 @@ a {
     justify-content: space-between;
     margin-bottom: 15px;
 
+    @include mobile {
+      flex-direction: column;
+    }
+
     h2 {
       line-height: 1.5;
       margin-bottom: 7px;
@@ -102,6 +106,10 @@ a {
         // padding-right: 10px;
         font-weight: 500;
         text-align: right;
+
+        &.date {
+          color: #f52653;
+        }
       }
     }
   }
