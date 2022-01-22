@@ -1,6 +1,6 @@
 <template>
   <Navbar />
-  <main>
+  <main v-show="allPosts.length >= 1">
     <header>
       <h1>All posts</h1>
     </header>
@@ -10,16 +10,26 @@
         :key="post.id"
         :postid="post.id"
         :title="post.title"
+        :content="post.content"
         :author="post.user.first_name + ' ' + post.user.last_name"
         :date="post.created_at"
       />
     </section>
   </main>
+  <main id="empty" v-show="allPosts.length == 0">
+    <img src="@/assets/not-found.svg" alt="no content yet" />
+    <h1>There is no blog post yet</h1>
+    <Button buttonText="Add post" class="blog-cta" @click="openModal" />
+  </main>
+
+  <AddPost @close-modal="closeModal" v-show="showModal" />
 </template>
 
 <script>
 import Navbar from "@/components/Navbar.vue";
 import ArticleCard from "@/components/ArticleCard.vue";
+import AddPost from "@/components/AddPost.vue";
+import Button from "@/components/Button.vue";
 import axios from "axios";
 
 export default {
@@ -27,13 +37,24 @@ export default {
   components: {
     Navbar,
     ArticleCard,
+    Button,
+    AddPost,
   },
   data() {
     return {
-      allPosts: null,
+      showModal: false,
+      allPosts: [],
     };
   },
   methods: {
+    // show add blog modal
+    openModal() {
+      this.showModal = true;
+    },
+    // hide add blog modal
+    closeModal() {
+      this.showModal = false;
+    },
     getAllPosts() {
       //   API CONFIG
       const config = {
@@ -63,6 +84,41 @@ export default {
 <style lang="scss" scoped>
 main {
   position: relative;
+
+  &#empty {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    // border: 1px solid red;
+
+    img {
+      display: block;
+      margin: 5% auto 1%;
+      width: auto;
+      height: 250px;
+      // border: 1px solid red;
+
+      @include mobile {
+        height: 200px;
+      }
+      @include tablet {
+        height: 250px;
+      }
+      @include laptop {
+        height: 250px;
+      }
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      color: #4f4f4f;
+      margin-bottom: 30px;
+    }
+  }
 
   header {
     margin: 30px auto 15px;

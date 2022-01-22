@@ -12,7 +12,10 @@ import Navbar from "@/components/Navbar.vue";
 
 export default {
   name: "Post",
-  props: ["id", "pagetitle"],
+  props: {
+    id: String,
+    pagetitle: String,
+  },
   components: {
     Navbar,
   },

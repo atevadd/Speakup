@@ -121,6 +121,8 @@ export default {
 
           // closing the modal after a successful post.
           this.closeModal();
+          // refresh the page after adding the blog post
+          location.reload();
         })
         .catch((error) => {
           this.formError = error.response.data.message;

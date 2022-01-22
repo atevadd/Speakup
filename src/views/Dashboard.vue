@@ -11,10 +11,13 @@
         <!-- All post listing -->
         <div class="all-posts-content">
           <ArticleCard
-            v-for="i in 3"
-            :key="i"
-            :postid="i"
-            title="my first blog"
+            v-for="post in allPosts"
+            :key="post.id"
+            :postid="post.id"
+            :title="post.title"
+            :content="post.content"
+            :author="post.user.first_name + ' ' + post.user.last_name"
+            :date="post.created_at"
           />
         </div>
       </div>
@@ -34,7 +37,6 @@
 
 <script>
 import Navbar from "@/components/Navbar.vue";
-// import Comment from "@/components/Comment.vue";
 import ArticleCard from "@/components/ArticleCard.vue";
 import AddPost from "@/components/AddPost.vue";
 import Button from "@/components/Button.vue";
@@ -75,7 +77,9 @@ export default {
 
       axios(config)
         .then((response) => {
-          console.log(response);
+          console.log(response.data.data.data);
+          // reverse the list then store it in the variable
+          this.allPosts = response.data.data.data.reverse();
         })
         .catch((error) => {
           console.log(error.response);

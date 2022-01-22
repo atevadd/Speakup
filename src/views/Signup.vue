@@ -17,7 +17,6 @@
           type="text"
           v-model="userData.first_name"
           id="fname"
-          autocomplete="off"
           inputmode="text"
         />
       </BaseInput>
@@ -27,7 +26,6 @@
           type="text"
           v-model="userData.last_name"
           id="lname"
-          autocomplete="off"
           inputmode="text"
         />
       </BaseInput>
@@ -37,7 +35,6 @@
           type="email"
           v-model="userData.email"
           id="email"
-          autocomplete="off"
           inputmode="email"
         />
       </BaseInput>
@@ -71,7 +68,12 @@
           <i class="bx bxs-show"></i>
         </span>
       </BaseInput>
-      <Button buttonText="Sign up" type="submit" width="100%" :class="{loading: sendingRequest}" />
+      <Button
+        buttonText="Sign up"
+        type="submit"
+        width="100%"
+        :class="{ loading: sendingRequest }"
+      />
     </form>
 
     <div class="login-container">
@@ -92,9 +94,9 @@ export default {
   name: "Signup",
   components: {
     BaseInput,
-    Button
+    Button,
   },
-  props:{
+  props: {
     msg: String,
   },
   data() {
@@ -105,10 +107,10 @@ export default {
         phone: "",
         email: "",
         password: "",
-        confirm_password: ""
+        confirm_password: "",
       },
       sendingRequest: false,
-      formError: null
+      formError: null,
     };
   },
   methods: {
@@ -119,9 +121,9 @@ export default {
         method: "POST",
         url: "https://tofumi-universal-api.herokuapp.com/api/v1/register",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        data: this.userData
+        data: this.userData,
       };
 
       // console.log(this.userData)
@@ -130,7 +132,7 @@ export default {
 
       // Submitting the user data to the API
       axios(config)
-        .then(response => {
+        .then((response) => {
           // console.log(response);
 
           this.formError = null;
@@ -139,12 +141,12 @@ export default {
             this.$router.push({
               name: "login",
               params: {
-                msg: "Your account has been created"
-              }
+                msg: "Your account has been created",
+              },
             });
           }
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.response.data.message != null) {
             this.formError = error.response.data.errors.email[0];
           }
@@ -165,19 +167,19 @@ export default {
         passwordField.type = "password";
         icon.className = "bx bxs-show";
       }
+    },
+  },
+  mounted() {
+    if (this.msg != null) {
+      setTimeout(() => {
+        document.querySelector(".msg").remove();
+      }, 4000);
+    } else if (this.formError !== null) {
+      setTimeout(() => {
+        this.formError = null;
+      }, 4000);
     }
   },
-  mounted(){
-    if(this.msg != null){
-      setTimeout(() =>{
-        document.querySelector(".msg").remove();
-      }, 4000)
-    }else if(this.formError !== null){
-      setTimeout(() =>{
-        this.formError = null
-      }, 4000)
-    }
-  }
 };
 </script>
 

@@ -14,7 +14,7 @@
           <span class="date">{{ formattedDate }}</span>
         </div>
       </header>
-      <p>{{ content }}</p>
+      <p class="blog-content">{{ content }}</p>
     </section>
   </router-link>
 </template>
@@ -42,8 +42,7 @@ export default {
   },
   computed: {
     formattedDate() {
-      // return moment(this.date).format("ll");
-      return moment(this.date).startOf("hour").fromNow();
+      return moment(this.date).format("ll");
     },
   },
 };
@@ -114,10 +113,14 @@ a {
     }
   }
 
-  p {
+  .blog-content {
     font-size: 0.9rem;
     line-height: 1.6;
     color: #797979;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
   }
 }
 </style>
