@@ -123,6 +123,7 @@ export default {
   .all-posts {
     position: relative;
     display: block;
+    width: 100%;
 
     &-header {
       width: 100%;
