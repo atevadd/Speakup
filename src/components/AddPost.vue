@@ -116,17 +116,17 @@ export default {
 
       axios(config)
         .then((response) => {
-          console.log(response);
           this.sendingStatus = false;
-
           // closing the modal after a successful post.
           this.closeModal();
           // refresh the page after adding the blog post
-          location.reload();
+          if (response.data.data !== null) {
+            location.reload();
+          }
         })
         .catch((error) => {
-          this.formError = error.response.data.message;
           this.sendingStatus = false;
+          this.formError = error.response.data.message;
 
           // removing the formError after 3s
           setTimeout(() => {
@@ -166,7 +166,7 @@ export default {
       width: 90%;
     }
     @include tablet {
-      width: 70%;
+      width: 80%;
     }
     @include laptop {
       width: 50%;

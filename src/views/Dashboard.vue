@@ -147,7 +147,6 @@ export default {
   .empty-state {
     width: 100%;
     margin: 0 auto;
-    // border: 2px solid red;
 
     img {
       width: 100%;
