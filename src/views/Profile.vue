@@ -4,7 +4,17 @@
     <!-- <div class="profile-banner"></div> -->
     <div class="profile-container">
       <div class="img">
-        <img :src="profileDetails.avatar" alt="profile picture" />
+        <img src="@/assets/user-icon.png" alt="profile picture" />
+        <div class="input-box">
+          <label for="profile-pic"><i class="bx bx-pencil"></i></label>
+          <input
+            type="file"
+            id="profile-pic"
+            accept="image/*"
+            @change="updateProfilePicture"
+            hidden
+          />
+        </div>
       </div>
       <div class="profile-info">
         <div class="details">
@@ -107,7 +117,9 @@
           </div>
         </div>
 
-        <button type="submit">Edit profile</button>
+        <button type="submit" :class="[sendingStatus ? 'loading' : '']">
+          Edit profile
+        </button>
       </form>
     </BaseModal>
   </main>
@@ -138,6 +150,7 @@ export default {
       showDeleteModal: false,
       showEditModal: false,
       fileName: "",
+      sendingStatus: false,
     };
   },
   created() {
@@ -173,7 +186,7 @@ export default {
 
       axios(config)
         .then((response) => {
-          console.log(response.data.data);
+          // console.log(response.data.data);
           //storing the API response in the profileDetails data
           this.profileDetails = response.data.data;
 
@@ -192,7 +205,7 @@ export default {
           console.log(error.response);
         });
     },
-    // delete profile function
+    // delete profile
     deleteProfile() {
       let userId = this.profileDetails.id;
       let userToken = localStorage.getItem("access_token");
@@ -227,20 +240,58 @@ export default {
           console.log(error);
         });
     },
-    // edit profile function
+    // edit profile
     editProfile() {
-      console.log(this.editProfileDetails);
+      this.sendingStatus = true;
+
       let userId = this.profileDetails.id;
       const userToken = localStorage.getItem("access_token");
 
       const config = {
-        method: "PATCH",
+        method: "POST",
         url: `https://tofumi-universal-api.herokuapp.com/api/v1/users/${userId}`,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${userToken}`,
         },
         data: this.editProfileDetails,
+      };
+
+      axios(config)
+        .then((response) => {
+          if (response.status === 200 || response.data.status === "success") {
+            this.sendingStatus = false;
+            this.showEditModal = false;
+            location.reload();
+          }
+        })
+        .catch((error) => {
+          this.sendingStatus = true;
+          console.log(error.response);
+        });
+    },
+    // update profile picture
+    updateProfilePicture(e) {
+      let userId = this.profileDetails.id;
+      const userToken = localStorage.getItem("access_token");
+
+      console.log(e.target.files.item(0));
+      let image = e.target.files[0];
+      console.log(e.target.value);
+
+      // user profile picture
+      const userData = new FormData();
+
+      userData.append("avatar", image);
+
+      const config = {
+        method: "POST",
+        url: `https://tofumi-universal-api.herokuapp.com/api/v1/users/${userId}`,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${userToken}`,
+        },
+        data: userData,
       };
 
       axios(config)
@@ -279,13 +330,13 @@ export default {
   }
   &-container {
     position: relative;
-    width: 70%;
-    margin: 7% auto 2%;
+    width: 80%;
+    margin: 7% auto 5%;
     display: grid;
     grid-template-columns: 1fr 3fr;
-    border: 1px solid;
-    align-items: flex-start;
-    gap: 0 20px;
+    // border: 1px solid;
+    align-items: center;
+    gap: 0 40px;
 
     @include mobile {
       width: 90%;
@@ -303,11 +354,10 @@ export default {
     }
 
     .img {
+      position: relative;
       width: 200px;
-      height: 200px;
-      border: 2px solid red;
-      overflow: hidden;
       border-radius: 50%;
+      // border: 2px solid rgb(218, 218, 218);
 
       @include mobile {
         width: 100px;
@@ -321,8 +371,33 @@ export default {
 
       img {
         width: 100%;
-        height: 100%;
+        height: 200px;
+        // border-radius: 50%;
+        // border: 2px solid red;
+      }
+
+      label {
+        font-size: 1.6rem;
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #797979;
         border-radius: 50%;
+        cursor: pointer;
+        transition: 0.15s ease;
+
+        &:hover {
+          background-color: #484848;
+        }
+
+        i {
+          color: #fff;
+        }
       }
     }
 
@@ -366,18 +441,21 @@ export default {
   }
 
   &-cta {
-    width: 70%;
+    width: 80%;
     margin: 0 auto;
     display: flex;
     align-items: center;
     gap: 0 20px;
     transition: 0.2s ease;
+    // border: 1px solid;
 
     @include mobile {
       width: 90%;
+      margin: 0 auto;
     }
     @include tablet {
       width: 90%;
+      margin: 0 auto;
     }
 
     button {
@@ -621,6 +699,7 @@ export default {
       font-weight: 600;
       border-radius: 5px;
       transition: 0.15s ease;
+      overflow: hidden;
 
       &:hover {
         background-color: darken($color: $brand-color, $amount: 10%);
@@ -629,6 +708,33 @@ export default {
       &:focus {
         outline: 1px solid #141414;
         outline-offset: 5px;
+      }
+
+      &.loading {
+        position: relative;
+        z-index: 2;
+        cursor: wait;
+        color: rgb(167, 167, 167);
+        pointer-events: none;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 300%;
+          height: 100%;
+          background: $brand-color
+            repeating-linear-gradient(
+              60deg,
+              transparent,
+              transparent 10px,
+              lighten($color: $brand-color, $amount: 10%) 10px,
+              lighten($color: $brand-color, $amount: 10%) 20px
+            );
+          z-index: -1;
+          animation: loading 1s infinite linear;
+        }
       }
     }
   }
@@ -650,6 +756,15 @@ export default {
   }
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-25px);
+  }
+  100% {
+    transform: translateX(20px);
   }
 }
 </style>
