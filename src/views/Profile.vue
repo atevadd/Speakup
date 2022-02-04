@@ -343,14 +343,14 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin: 30px auto 10px;
+      margin: 30px auto 30px;
     }
     @include tablet {
       width: 90%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin: 30px auto 10px;
+      margin: 30px auto 30px;
     }
 
     .img {
