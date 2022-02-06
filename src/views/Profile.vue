@@ -4,8 +4,9 @@
     <!-- <div class="profile-banner"></div> -->
     <div class="profile-container">
       <div class="img">
-        <img src="@/assets/user-icon.png" alt="profile picture" />
-        <div class="input-box">
+        <!-- <img src="@/assets/user-icon.png" alt="profile picture" /> -->
+        <img :src="baseUrl + profileDetails.avatar" alt="profile picture" />
+        <form enctype="multipart/form-data" class="input-box">
           <label for="profile-pic"><i class="bx bx-pencil"></i></label>
           <input
             type="file"
@@ -14,7 +15,7 @@
             @change="updateProfilePicture"
             hidden
           />
-        </div>
+        </form>
       </div>
       <div class="profile-info">
         <div class="details">
@@ -81,11 +82,6 @@
         <div class="close-modal" @click="toggleEditModal(false)">
           <i class="bx bx-x"></i>
         </div>
-        <!-- <div class="input-box">
-					<label for="picture">Change profile picture</label>
-					<input type="file" id="picture" accept="image/*"  @change="displayFileName"/>
-					<span class="filename">{{ fileName }}</span>
-				</div> -->
 
         <div class="group">
           <div class="input-box">
@@ -138,7 +134,7 @@ export default {
   },
   data() {
     return {
-      baseUrl: "https://tofumi-universal-api.herokuapp.com/api/v1/",
+      baseUrl: "https://tofumi-universal-api.herokuapp.com/",
       profileDetails: "",
       editProfileDetails: {
         first_name: "",
@@ -153,7 +149,7 @@ export default {
       sendingStatus: false,
     };
   },
-  created() {
+  mounted() {
     // loading the user profile
     this.loadProfile();
   },
@@ -186,7 +182,6 @@ export default {
 
       axios(config)
         .then((response) => {
-          // console.log(response.data.data);
           //storing the API response in the profileDetails data
           this.profileDetails = response.data.data;
 
@@ -262,7 +257,7 @@ export default {
           if (response.status === 200 || response.data.status === "success") {
             this.sendingStatus = false;
             this.showEditModal = false;
-            location.reload();
+            this.loadProfile();
           }
         })
         .catch((error) => {
@@ -275,9 +270,8 @@ export default {
       let userId = this.profileDetails.id;
       const userToken = localStorage.getItem("access_token");
 
-      console.log(e.target.files.item(0));
+      // console.log(e.target.files.item(0));
       let image = e.target.files[0];
-      console.log(e.target.value);
 
       // user profile picture
       const userData = new FormData();
@@ -288,15 +282,20 @@ export default {
         method: "POST",
         url: `https://tofumi-universal-api.herokuapp.com/api/v1/users/${userId}`,
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
           Authorization: `Bearer ${userToken}`,
         },
-        data: userData,
+        data: JSON.stringify(userData),
       };
 
       axios(config)
         .then((response) => {
-          console.log(response);
+          if (
+            response.data.message == "User updated" ||
+            response.status === 200
+          ) {
+            this.loadProfile();
+          }
         })
         .catch((error) => {
           console.log(error.response);
@@ -357,7 +356,7 @@ export default {
       position: relative;
       width: 200px;
       border-radius: 50%;
-      // border: 2px solid rgb(218, 218, 218);
+      border: 2px solid rgb(218, 218, 218);
 
       @include mobile {
         width: 100px;
@@ -374,6 +373,10 @@ export default {
         height: 200px;
         // border-radius: 50%;
         // border: 2px solid red;
+
+        @include mobile {
+          height: 100%;
+        }
       }
 
       label {

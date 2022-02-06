@@ -100,7 +100,6 @@ export default {
     },
     // adding a blog post
     addBlogPost() {
-      console.log(this.addBlogDetails);
       this.sendingStatus = true;
       const userToken = localStorage.getItem("access_token");
 
@@ -120,9 +119,10 @@ export default {
           // closing the modal after a successful post.
           this.closeModal();
           // refresh the page after adding the blog post
-          if (response.data.data !== null) {
+          if (response.data.data != null) {
             location.reload();
           }
+          this.$emit("load-post");
         })
         .catch((error) => {
           this.sendingStatus = false;
@@ -148,7 +148,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba($color: #000000, $alpha: 0.7);
+  background: rgba($color: #000000, $alpha: 0.85);
   display: flex;
   align-items: center;
   justify-content: center;

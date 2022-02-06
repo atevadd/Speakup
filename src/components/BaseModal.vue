@@ -20,10 +20,9 @@ export default {
   width: 100%;
   height: 100vh;
   display: flex;
-    align-items: center;
+  align-items: center;
   justify-content: center;
   z-index: 10;
-  background-color: rgba($color: #000000, $alpha: 0.6);
-
+  background-color: rgba($color: #000000, $alpha: 0.85);
 }
 </style>

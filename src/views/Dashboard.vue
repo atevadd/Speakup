@@ -30,7 +30,11 @@
     </div>
 
     <!-- <div class="post-modal" > -->
-    <AddPost @close-modal="closeModal" v-show="showModal" />
+    <AddPost
+      @close-modal="closeModal"
+      @load-post="reloadPost"
+      v-show="showModal"
+    />
     <!-- </div> -->
   </main>
 </template>
@@ -63,6 +67,9 @@ export default {
     closeModal() {
       this.showModal = false;
     },
+    reloadPost() {
+      this.loadUserPosts();
+    },
     loadUserPosts() {
       const userToken = localStorage.getItem("access_token");
 
@@ -77,7 +84,6 @@ export default {
 
       axios(config)
         .then((response) => {
-          console.log(response.data.data.data);
           // reverse the list then store it in the variable
           this.allPosts = response.data.data.data.reverse();
         })
@@ -86,7 +92,7 @@ export default {
         });
     },
   },
-  mounted() {
+  created() {
     this.loadUserPosts();
   },
 };
