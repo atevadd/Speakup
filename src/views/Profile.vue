@@ -4,8 +4,12 @@
     <!-- <div class="profile-banner"></div> -->
     <div class="profile-container">
       <div class="img">
-        <!-- <img src="@/assets/user-icon.png" alt="profile picture" /> -->
-        <img :src="baseUrl + profileDetails.avatar" alt="profile picture" />
+        <img
+          :src="baseUrl + profileDetails.avatar"
+          alt="profile picture"
+          v-if="defaultImage"
+        />
+        <img src="@/assets/user-icon.png" alt="profile picture" v-else />
         <form enctype="multipart/form-data" class="input-box">
           <label for="profile-pic"><i class="bx bx-pencil"></i></label>
           <input
@@ -75,7 +79,7 @@
 
     <!-- edit profile modal -->
     <BaseModal v-if="showEditModal">
-      <form @submit.prevent="editProfile">
+      <form @submit.prevent="editProfile" id="edit">
         <header>
           <h1>Edit your profile</h1>
         </header>
@@ -147,6 +151,7 @@ export default {
       showEditModal: false,
       fileName: "",
       sendingStatus: false,
+      defaultImage: null,
     };
   },
   mounted() {
@@ -355,12 +360,13 @@ export default {
     .img {
       position: relative;
       width: 200px;
-      border-radius: 50%;
-      border: 2px solid rgb(218, 218, 218);
+      height: 200px;
+      // border-radius: 50%;
+      // border: 2px solid rgb(218, 218, 218);
 
       @include mobile {
-        width: 100px;
-        height: 100px;
+        width: 150px;
+        height: 150px;
         margin-bottom: 25px;
       }
       @include tablet {
@@ -369,21 +375,22 @@ export default {
       }
 
       img {
-        width: 100%;
+        width: 200px;
         height: 200px;
         // border-radius: 50%;
         // border: 2px solid red;
 
         @include mobile {
-          height: 100%;
+          width: 150px;
+          height: 150px;
         }
       }
 
       label {
         font-size: 1.6rem;
         position: absolute;
-        bottom: 12px;
-        right: 12px;
+        bottom: 8px;
+        right: 8px;
         width: 40px;
         height: 40px;
         display: flex;
@@ -393,6 +400,12 @@ export default {
         border-radius: 50%;
         cursor: pointer;
         transition: 0.15s ease;
+
+        @include mobile {
+          right: 3px;
+          bottom: 3px;
+          font-size: 1.3rem;
+        }
 
         &:hover {
           background-color: #484848;
@@ -560,7 +573,7 @@ export default {
     }
   }
 
-  form {
+  #edit {
     position: relative;
     background-color: #fff;
     margin: auto;

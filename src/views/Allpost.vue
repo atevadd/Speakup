@@ -67,7 +67,7 @@ export default {
 
       axios(config)
         .then((response) => {
-          console.log(response.data.data.data);
+          // console.log(response.data.data.data);
           this.allPosts = response.data.data.data.reverse();
         })
         .catch((error) => {
