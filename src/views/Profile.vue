@@ -581,6 +581,7 @@ export default {
     border-radius: 10px;
     display: block;
     animation: slidedown 0.5s ease;
+    width: 45%;
 
     @include mobile {
       width: 90%;
@@ -589,7 +590,7 @@ export default {
       width: 80%;
     }
     @include laptop {
-      width: 50%;
+      width: 60%;
     }
 
     header {

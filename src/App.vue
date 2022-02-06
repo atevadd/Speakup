@@ -1,9 +1,8 @@
 <template>
   <!-- <transition name="router"> -->
-    <router-view />
+  <router-view />
   <!-- </transition> -->
 </template>
-
 
 <script>
 // import axios from "axios";
@@ -26,7 +25,7 @@ export default {
   padding: 0;
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
-  overflow-wrap: break-word
+  overflow-wrap: break-word;
 }
 
 a {
@@ -36,6 +35,29 @@ a {
 ::selection {
   color: $white;
   background-color: $brand-color;
+}
+
+// Custom scrollbar
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $brand-color;
+  border-radius: 50px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: darken($color: $brand-color, $amount: 15%);
 }
 
 body {

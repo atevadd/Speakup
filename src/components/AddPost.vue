@@ -169,7 +169,7 @@ export default {
       width: 80%;
     }
     @include laptop {
-      width: 50%;
+      width: 60%;
     }
 
     span {
@@ -267,6 +267,28 @@ export default {
     padding: 10px;
     outline: none;
     resize: none;
+
+    /* width */
+    &::-webkit-scrollbar {
+      width: 5px;
+      cursor: pointer;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: $brand-color;
+      border-radius: 50px;
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+      background: darken($color: $brand-color, $amount: 10%);
+    }
 
     &:focus {
       border: 1px solid $brand-color;
