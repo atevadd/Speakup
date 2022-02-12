@@ -1,6 +1,6 @@
 <template>
   <Navbar />
-  <main v-show="allPosts.length >= 1">
+  <main v-if="allPosts.length >= 1">
     <header>
       <h1>All posts</h1>
     </header>
@@ -16,7 +16,7 @@
       />
     </section>
   </main>
-  <main id="empty" v-show="allPosts.length == 0">
+  <main id="empty" v-else-if="allPosts.length == 0">
     <img src="@/assets/not-found.svg" alt="no content yet" />
     <h1>There is no blog post yet</h1>
     <Button buttonText="Add post" class="blog-cta" @click="openModal" />
@@ -68,14 +68,16 @@ export default {
       axios(config)
         .then((response) => {
           // console.log(response.data.data.data);
+          console.log(this.allPosts);
           this.allPosts = response.data.data.data.reverse();
+          console.log(this.allPosts);
         })
         .catch((error) => {
           console.log(error);
         });
     },
   },
-  mounted() {
+  created() {
     this.getAllPosts();
   },
 };

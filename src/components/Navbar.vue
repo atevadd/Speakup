@@ -46,13 +46,7 @@ export default {
       this.$emit("show-modal");
     },
     showMenu() {
-      if (document.querySelector(".nav").style.height == "96px") {
-        document.querySelector(".nav").style.height = "0px";
-      } else {
-        for (let x = 0; x <= 120; x++) {
-          document.querySelector(".nav").style.height = `${x}px`;
-        }
-      }
+      document.querySelector(".nav").classList.toggle("show");
     },
   },
   mounted() {
@@ -69,7 +63,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 5px solid $brand-color;
+  border-top: 3px solid $brand-color;
   background: #b5b5b5;
   flex-wrap: wrap;
   flex: 1 1 0;
@@ -100,27 +94,35 @@ header {
     position: relative;
     transition: height 0.3s ease;
 
-    &.height {
-      height: auto;
-
-      @include mobile {
-        height: 0;
-      }
-      @include tablet {
-        height: 0;
-      }
-      @include laptop {
-        height: auto !important;
-      }
+    &.show {
+      display: block;
     }
+
+    // &.height {
+    //   height: auto;
+
+    //   @include mobile {
+    //     // height: 0;
+    //     display: none;
+    //   }
+    //   @include tablet {
+    //     // height: 0;
+    //     display: none;
+    //   }
+    //   @include laptop {
+    //     height: auto !important;
+    //   }
+    // }
 
     @include mobile {
       order: 4;
       width: 100%;
+      display: none;
     }
     @include tablet {
       order: 4;
       width: 100%;
+      display: none;
     }
 
     ul {

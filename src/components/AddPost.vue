@@ -118,11 +118,19 @@ export default {
           this.sendingStatus = false;
           // closing the modal after a successful post.
           this.closeModal();
+
+          this.addBlogDetails = {
+            title: "",
+            blog_category_id: "",
+            content: "",
+          };
           // refresh the page after adding the blog post
           if (response.data.data != null) {
             location.reload();
           }
           this.$emit("load-post");
+
+          this.$toast("Blog added successfully");
         })
         .catch((error) => {
           this.sendingStatus = false;
