@@ -348,13 +348,4 @@ export default {
     }
   }
 }
-
-@keyframes loading {
-  0% {
-    transform: translateX(-25px);
-  }
-  100% {
-    transform: translateX(20px);
-  }
-}
 </style>

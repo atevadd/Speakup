@@ -50,23 +50,23 @@ export default {
   name: "Signup",
   components: {
     BaseInput,
-    Button
+    Button,
   },
   props: {
     msg: {
       type: String,
       required: false,
-      default: null
-    }
+      default: null,
+    },
   },
   data() {
     return {
       loginData: {
         email: "",
-        password: ""
+        password: "",
       },
       sendingRequest: false,
-      loginMessage: null
+      loginMessage: null,
     };
   },
   methods: {
@@ -88,29 +88,26 @@ export default {
         method: "POST",
         url: "https://tofumi-universal-api.herokuapp.com/api/v1/login",
         header: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        data: this.loginData
+        data: this.loginData,
       };
 
       axios(config)
-        .then(response => {
+        .then((response) => {
           // stores the user token in the session storage the user logs in
-          localStorage.setItem(
-            "access_token",
-            response.data.data.access_token
-          );
+          localStorage.setItem("access_token", response.data.data.access_token);
 
           this.sendingRequest = false;
 
           if (response.status === 200 || response.data.status === "success") {
             localStorage.setItem("speakup-isLoggedIn", "true");
             this.$router.push({
-              name: "dashboard"
+              name: "dashboard",
             });
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err.response);
           this.loginMessage = err.response.data.message;
           this.sendingRequest = false;
@@ -123,7 +120,7 @@ export default {
     },
     removeSignupResponse() {
       document.querySelector(".success").remove();
-    }
+    },
   },
   mounted() {
     if (this.msg !== null) {
@@ -131,7 +128,7 @@ export default {
         this.removeSignupResponse();
       }, 4000);
     }
-  }
+  },
 };
 </script>
 
@@ -338,12 +335,12 @@ export default {
   }
 }
 
-@keyframes loading {
-  0% {
-    transform: translateX(-25px);
-  }
-  100% {
-    transform: translateX(20px);
-  }
-}
+// @keyframes loading {
+//   0% {
+//     transform: translateX(-25px);
+//   }
+//   100% {
+//     transform: translateX(20px);
+//   }
+// }
 </style>

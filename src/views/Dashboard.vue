@@ -58,6 +58,7 @@ export default {
     return {
       showModal: false,
       allPosts: true,
+      pageError: null,
     };
   },
   methods: {
@@ -88,7 +89,12 @@ export default {
           this.allPosts = response.data.data.data.reverse();
         })
         .catch((error) => {
-          console.log(error.response);
+          if (error.message === "Network Error") {
+            console.log(error.message);
+            this.pageError = error.message;
+          } else {
+            console.log(error.response);
+          }
         });
     },
   },

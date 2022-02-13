@@ -44,6 +44,7 @@
 				</div> -->
       </div>
     </div>
+    <div class="skeleton"></div>
     <!-- profile Buttons -->
     <div class="profile-cta">
       <button
@@ -247,6 +248,7 @@ export default {
       let userId = this.profileDetails.id;
       const userToken = localStorage.getItem("access_token");
 
+      // API config
       const config = {
         method: "POST",
         url: `https://tofumi-universal-api.herokuapp.com/api/v1/users/${userId}`,
@@ -266,7 +268,7 @@ export default {
           }
         })
         .catch((error) => {
-          this.sendingStatus = true;
+          this.sendingStatus = false;
           console.log(error.response);
         });
     },
@@ -556,17 +558,20 @@ export default {
 
         &.no {
           background: transparent;
+          transition: 0.3s ease;
 
           &:hover {
-            font-weight: 500;
+            font-weight: 600;
           }
         }
         &.yes {
           color: #c11515;
-          font-weight: 500;
+          font-weight: 600;
+          background: #c115153c;
+          transition: 0.3s ease;
 
           &:hover {
-            background: #c115153c;
+            background: #c1151580;
           }
         }
       }
@@ -754,34 +759,6 @@ export default {
         }
       }
     }
-  }
-}
-
-@keyframes slidedown {
-  0% {
-    opacity: 0;
-    transform: translateY(100px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes reveal {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes loading {
-  0% {
-    transform: translateX(-25px);
-  }
-  100% {
-    transform: translateX(20px);
   }
 }
 </style>

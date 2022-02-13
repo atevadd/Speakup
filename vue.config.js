@@ -1,12 +1,13 @@
 module.exports = {
-    css:{
-        loaderOptions:{
-            sass:{
-                prependData:`
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: `
                 @import "@/assets/sass/_variable.scss";
                 @import "@/assets/sass/_mixins.scss";
-                `
-            }
-        }
-    }
-}
+                @import "@/assets/sass/_animations.scss";
+                `,
+      },
+    },
+  },
+};
